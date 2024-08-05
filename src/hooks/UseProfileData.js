@@ -12,7 +12,7 @@ const UseProfileData = (user) => {
       try {
         const docRef = doc(db, 'users', user);
         const docSnap = await getDoc(docRef);
-        console.log("read")
+        
         if (docSnap.exists()) {
           setProfileData(docSnap.data());
         } else {

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { Timestamp } from 'firebase/firestore';
 
 
-const SuggestedPost = ({article}) => {
+const SuggestedPost = ({article, articleData}) => {
   const [cachedData, setCachedData] = useState(JSON.parse(localStorage.getItem(article)));
   const [loading, setLoading] = useState(true);
   const [date , setDate] = useState('');
@@ -15,7 +15,11 @@ const SuggestedPost = ({article}) => {
   
   useEffect(() => {
     if (!cachedData) {
-      fetchArticle();
+      // fetchArticle();
+      
+      localStorage.setItem(article, JSON.stringify(articleData));
+      setCachedData(articleData);
+      setLoading(false);
     }
     else {
       
@@ -35,7 +39,7 @@ const SuggestedPost = ({article}) => {
   
   function fetchArticle() {
     
-    
+    // this function will fetch the article from firebase, but it is costly, so i am using a local storage method
     const docRef = doc(db, "articles", article);
     getDoc(docRef).then((docSnap) => {
       if (docSnap.exists()) {

@@ -101,14 +101,14 @@ const Home = () => {
           .sort((a, b) => UsePopularityAlgorithm(b.data().likes.length, b.data().date.seconds) - UsePopularityAlgorithm(a.data().likes.length, a.data().date.seconds))
           .filter((doc) => doc.data().tags.includes(filter) || filter === null)
           .map((doc) => {
-              return <SuggestedPost article={doc.id} key={doc.id}/>
+              return <SuggestedPost article={doc.id} articleData={doc.data()} key={doc.id}/>
             })}
 
           {!loading && !sort && articles && articles.docs && articles.docs
           .sort((a, b) => b.data().date.seconds - a.data().date.seconds)
           .filter((doc) => doc.data().tags.includes(filter) || filter === null)
           .map((doc) => {
-              return <SuggestedPost article={doc.id} key={doc.id}/>
+              return <SuggestedPost article={doc.id} articleData={doc.data()} key={doc.id}/>
             })}
             
           
