@@ -13,6 +13,9 @@ export default {
   ],
   fontFamily: {
     'gupter': ['Gupter', 'serif'],
+  },
+  daisyui: {
+    themes: ["light", "dark"],
   }
 }
 
