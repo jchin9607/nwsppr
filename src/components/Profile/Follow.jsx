@@ -25,7 +25,7 @@ const Follow = ({user, data}) => {
         updateDoc(doc(db, "users", user), {followers: arrayUnion(ownData.uid)} ).then(() => {
             
             updateDoc(doc(db, "users", ownData.uid), {following: arrayUnion(user)} ).then(() => {
-                console.log("Followed");
+                localStorage.setItem('user', JSON.stringify({...ownData, following: ownData.following.concat(user)}))
                 setFollow(true);
                 setAmount(amount + 1)
                 setLoading(false)
@@ -39,7 +39,7 @@ const Follow = ({user, data}) => {
         setLoading(true)
         updateDoc(doc(db, "users", user), {followers: data.followers.filter(f => f !== ownData.uid)} ).then(() => {
             updateDoc(doc(db, "users", ownData.uid), {following: ownData.following.filter(f => f !== user)} ).then(() => {
-                console.log("Unfollowed");
+                localStorage.setItem('user', JSON.stringify({...ownData, following: ownData.following.filter(f => f !== user)}))
                 setFollow(false);
                 setAmount(amount - 1)
                 setLoading(false)
