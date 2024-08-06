@@ -7,12 +7,13 @@ import { getDocs } from 'firebase/firestore';
 import UsePopularityAlgorithm from '../hooks/UsePopularityAlgorithm.js';
 
 
+
 const Home = () => {
   
   const [loading, setLoading] = useState(true)
   const [ articles, setArticles ] = useState(null)
   const [filter , setFilter ] = useState(null)
-  const [filterList, setFilterList] = useState(['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'])
+  const [filterList, setFilterList] = useState( JSON.parse(localStorage.getItem('filterList')) || ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'])
   const [sort, setSort] = useState(true)
   const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
   const q = query(collection(db, "articles")
@@ -55,28 +56,53 @@ const Home = () => {
     
   }
 
+  function handleAddFilter(value) {
+    if (!filterList.includes(value) && value) {
+      setFilterList(prevFilterList => [...prevFilterList, value.toLowerCase()])
+      localStorage.setItem('filterList', JSON.stringify([...filterList, value.toLowerCase()]))
+      
+    }
+  }
 
+  function handleRemoveFilter(value) {
+    if (filterList.includes(value)) {
+      setFilterList(prevFilterList => prevFilterList.filter(prevFilter => prevFilter !== value))
+      localStorage.setItem('filterList', JSON.stringify(filterList.filter(prevFilter => prevFilter !== value)))
+    }
+  }
+
+  
   
   
   
   return (
     <div className="px-[5%] min-h-screen">
       <div className="flex w-full h-full justify-center mt-7">
-        <div className='w-1/6 flex flex-col gap-[10px] sticky top-[60px] h-[50%]'>
+        <div className='flex-col gap-[10px] sticky top-[60px] hidden h-[50%] md:flex md:w-[25%] lg:flex lg:w-1/6  '>
           <p>Topics</p>
           <div>
-            <span className="badge badge-accent mr-2 cursor-pointer" onClick={() => setFilter(null)}>All</span>
-            {/* <span className="badge badge-accent mr-2 cursor-pointer" onClick={() => setFilter('business')}>#business</span>
-            <span className="badge badge-accent mr-2 cursor-pointer" onClick={() => setFilter('switching lanes')}>#switching lanes</span> */}
-            {filterList.map((filter) => <span className="badge badge-accent mr-2 cursor-pointer" onClick={() => setFilter(filter)} key={filter}>{filter}</span>)}
-            <span className="badge badge-accent mr-2 cursor-pointer bg-white">+</span>
+            <span className="badge badge-accent mr-2 cursor-pointer " onClick={() => setFilter(null)}>All</span>
+            
+            {filterList.map((filter) => <span className="badge badge-accent mr-2 cursor-pointer" key={filter}>
+              <div onClick={() => setFilter(filter)}>#{filter}</div>
+              <div onClick={() => handleRemoveFilter(filter)} 
+                className='text-white cursor-pointer ml-1' 
+                >x</div>
+              </span>)}
+            <div className="dropdown dropdown-hover">
+            <span tabIndex={0} role="button" className="badge badge-accent mr-2 cursor-pointer bg-white">+</span>
+                <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                <input id="tagAdder" type="text" placeholder="Add Tag" className="input input-bordered w-full max-w-xs" />
+                <li><a onClick={() => handleAddFilter(document.getElementById("tagAdder").value)}>Add</a></li>
+                </ul>
+            </div>
           
           </div>
           <div>
 
           </div>
         </div>
-        <div className='w-7/12'>
+        <div className='w-full lg:w-7/12'>
 
           
           {/* <SuggestedPost/>
@@ -113,7 +139,7 @@ const Home = () => {
             
           
         </div>
-        <div className='w-1/4  pl-[3%] h-[100%] flex flex-col'>
+        <div className='w-1/4  pl-[3%] h-[100%] flex-col hidden lg:flex'>
           <h1 className="">Recommended Users</h1>
           <h1 className="">Suggested Post</h1>
         </div>

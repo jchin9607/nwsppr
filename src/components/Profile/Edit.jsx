@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '../../firebase/firebase.js'
@@ -26,6 +26,8 @@ const Edit = ({userURL, data}) => {
 
     
 
+    
+
 
     const [userObject, setUserObject] = useState({
         fullName: data.fullName,
@@ -34,6 +36,16 @@ const Edit = ({userURL, data}) => {
         photoURL: data.photoURL,
         bannerURL: data.bannerURL
     })
+
+    useEffect(() => {
+        setUserObject({
+            fullName: data.fullName,
+            username: data.username,
+            bio: data.bio,
+            photoURL: data.photoURL,
+            bannerURL: data.bannerURL
+        })
+    }, [user, data])
    
 
     const handleReset = () => {

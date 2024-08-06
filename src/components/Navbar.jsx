@@ -34,8 +34,8 @@ const Navbar = ({loggedIn}) => {
 
   
   return (
-    <div className='h-[60px] flex items-center justify-between w-full pl-[5%] pr-[5%]'>
-        <Link to="/"><h1 className='text-4xl font-bold'>nwsppr.</h1> </Link>
+    <div className='h-[60px] flex items-center justify-between w-full px-[2%] md:px-[5%] '>
+        <Link to="/"><h1 className='font-bold md:text-4xl sm:text-2xl'>nwsppr.</h1> </Link>
 
        
 
@@ -60,7 +60,7 @@ const Navbar = ({loggedIn}) => {
                 <p className='cursor-pointer' onClick={() => signOut() }><li><a>Sign Out</a></li></p>
               </ul>
           </details>
-          <label className="swap swap-rotate">
+          <label className="swap swap-rotate hidden md:inline-grid">
             
             <input type="checkbox" className="theme-controller" value="dark" />
 

@@ -181,7 +181,7 @@ const MenuBar = ({ editor, editingDraft, titleData, descriptionData, coverData, 
   }
 
   return (
-    <div className="control-group w-[33%] relative">
+    <div className="z-10 control-group w-[100%] relative md:w-[33%] ">
       <div className="button-group w-[100%] flex flex-wrap gap-3 sticky top-8">
         <button
           onClick={() => editor.chain().focus().toggleBold().run()}
@@ -292,11 +292,11 @@ const MenuBar = ({ editor, editingDraft, titleData, descriptionData, coverData, 
       </dialog>
         
         <hr className='w-full h-1'/>
-        <div className="w-full  h-[80px]">
-          <input type="text" placeholder="Title" className="input w-full max-w-full h-full text-3xl" id='title' value={title} onChange={(e) => setTitle(e.target.value)}/>
+        <div className="w-full  h-[30px] md:h-[80px]">
+          <input type="text" placeholder="Title" className="input w-full max-w-full h-full text-1xl md:text-3xl" id='title' value={title} onChange={(e) => setTitle(e.target.value)}/>
         </div>
-        <div className="w-full  h-[80px]">
-          <input type="text" placeholder="Description" className="input w-full max-w-full h-full text-3xl" id='title' value={description} onChange={(e) => setDescription(e.target.value)}/>
+        <div className="w-full  h-[30px] md:h-[80px]">
+          <input type="text" placeholder="Description" className="input w-full max-w-full h-full text-1xl md:text-3xl" id='title' value={description} onChange={(e) => setDescription(e.target.value)}/>
         </div>
         <TagsInput color="default" values={tags} onChange={setTags}/>
       </div>

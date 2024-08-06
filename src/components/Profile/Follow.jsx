@@ -7,16 +7,17 @@ const Follow = ({user, data}) => {
     const ownData = JSON.parse(localStorage.getItem("user"))
     const [follow, setFollow] = useState(false)
     const [loading, setLoading] = useState(true)
+    const [amount, setAmount] = useState(data.followers.length)
+    
 
     useEffect(() => {
         
         if (data.followers.includes(ownData.uid)) {
             setFollow(true);
-            setLoading(false)
+            
         }
-        else {
-            setLoading(false)
-        }
+        setAmount(data.followers.length)
+        setLoading(false)
         
     }, [data, user]);
     function handleFollow(  ) {
@@ -26,8 +27,9 @@ const Follow = ({user, data}) => {
             updateDoc(doc(db, "users", ownData.uid), {following: arrayUnion(user)} ).then(() => {
                 console.log("Followed");
                 setFollow(true);
-                
-                window.location.reload()
+                setAmount(amount + 1)
+                setLoading(false)
+                // window.location.reload()
             })
         })
         
@@ -39,8 +41,9 @@ const Follow = ({user, data}) => {
             updateDoc(doc(db, "users", ownData.uid), {following: ownData.following.filter(f => f !== user)} ).then(() => {
                 console.log("Unfollowed");
                 setFollow(false);
-                
-                window.location.reload()
+                setAmount(amount - 1)
+                setLoading(false)
+                // window.location.reload()
             })
         })
     }
@@ -53,13 +56,21 @@ const Follow = ({user, data}) => {
 
     if (!follow) {
         return (
-            
-            <button onClick={handleFollow}>Follow</button>
+            <div className='flex flex gap-4 items-center'>
+                <p><strong>{amount}</strong> Followers</p>
+                <p><strong>{data.following.length}</strong> Following</p>
+                <button onClick={handleFollow}>Follow</button>
+            </div>
         )
     }
     else {
         return (
-            <button onClick={handleUnfollow}>Unfollow</button>
+            <div className='flex flex gap-4 items-center'>
+                <p><strong>{amount}</strong> Followers</p>
+                <p><strong>{data.following.length}</strong> Following</p>
+                
+                <button onClick={handleUnfollow}>Unfollow</button>
+            </div>
         )
     }
 }

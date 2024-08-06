@@ -27,13 +27,19 @@ const FollowOrEdit = ({user, data}) => {
 
 
     if (userLoggedIn && user !== userLoggedIn.uid) return (
-
-    
+        <>
+        {/* {data.followers.length} Followers
+        {data.following.length} Following */}
         <Follow user={user} data={data} />
+        </>
     )
 
     if (userLoggedIn && user === userLoggedIn.uid) return (
-        <Edit userURL={user} data={data} />
+        <div className='flex flex gap-4 items-center'>
+                <p><strong>{data.followers.length}</strong> Followers</p>
+                <p><strong>{data.following.length}</strong> Following</p>
+            <Edit userURL={user} data={data} />
+        </div>
     )
 }
 

@@ -17,12 +17,12 @@ const Login = () => {
 
         {!loading 
             ?
-            <form className="h-[40%] flex flex-col justify-between items-center">
-                <button className="w-full bg-white text-black rounded-md p-2 border border-black" onClick={() => signInWithGoogle()}>Continue with Google</button>
+            <form className="h-[40%] flex flex-col justify-between items-start">
+                <button className="max-w-[300px] bg-white text-black rounded-md p-2 border border-black" onClick={() => signInWithGoogle()}>Continue with Google</button>
                 
             </form>
             :
-            <button className="w-full bg-white text-black rounded-md p-2 border border-black">Loading...</button>
+            <button className="max-w-[300px] bg-white text-black rounded-md p-2 border border-black">Loading...</button>
         }
 
         {error && <p>{error.message}</p>}

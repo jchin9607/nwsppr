@@ -44,7 +44,7 @@ const Write = () => {
 
         })
     } else {
-      setContent('Write something here...')
+      setContent('Write something here...                                      ')
       setLoading(false)
     }
   }, [document])
@@ -52,7 +52,7 @@ const Write = () => {
   return (
       <>
       
-      <div className="p-[5%] pt-[5%] w-[100%]  flex flex-row-reverse justify-between relative min-h-[90vh]">
+      <div className="p-[2%] pt-[5%] w-[100%]  flex flex-col justify-between relative mb-[50%] gap-10 md:p-[5%] md:flex-row-reverse md:min-h-[90vh] md:mb-0 md:gap-0">
         
         {!loading && <Editor editing={true} content={content} editingDraft={document} title={titleData} description={descriptionData} cover={coverData} tags={tagsData}/>}
         

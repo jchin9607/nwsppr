@@ -56,7 +56,7 @@ const TagsInput = ({ values, onChange, color }) => {
                     <button className="remove-btn" onClick={() => removeTag(index)}>&times;</button>
                 </div>
             ))}
-            <input value={tag} onChange={handleChange} className="tag-input" onKeyDown={handleKeyDown} />
+            <input value={tag} onChange={handleChange} className="tag-input" onKeyDown={handleKeyDown} placeholder="Add tag"  />
         </div>
     )
 }
