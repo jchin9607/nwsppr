@@ -34,7 +34,7 @@ const Navbar = ({loggedIn}) => {
 
   
   return (
-    <div className='h-[60px] flex items-center justify-between w-full px-[2%] md:px-[5%] '>
+    <div className='h-[60px] flex items-center justify-between w-full px-[5%]'>
         <Link to="/"><h1 className='font-bold md:text-4xl sm:text-2xl'>nwsppr.</h1> </Link>
 
        

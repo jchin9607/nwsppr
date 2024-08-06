@@ -62,7 +62,7 @@ const SuggestedPost = ({article, articleData}) => {
     <>
     <Link to={'/article/' + article}>
     <div className='w-full  min-h-[250px] flex cursor-pointer '>
-      <div className='w-2/3 flex flex-col justify-between items-start py-10'>
+      <div className='w-2/3 flex flex-col justify-between items-start py-10 pr-[2%]'>
         {/* {cachedData.author} */}
         <h1 className='text-3xl font-bold font-gupter' >{cachedData.title}</h1>
         <p className='text-md text-gray-500 font-normal'>{cachedData.description}</p>
