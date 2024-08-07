@@ -8,6 +8,7 @@ import UsePopularityAlgorithm from '../hooks/UsePopularityAlgorithm.js';
 
 
 
+
 const Home = () => {
   
   const [loading, setLoading] = useState(true)
@@ -15,6 +16,7 @@ const Home = () => {
   const [filter , setFilter ] = useState(null)
   const [filterList, setFilterList] = useState( JSON.parse(localStorage.getItem('filterList')) || ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'])
   const [sort, setSort] = useState(true)
+  const [page, setPage] = useState(10)
   const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
   const q = query(collection(db, "articles")
   
@@ -34,7 +36,7 @@ const Home = () => {
     if (!articles) {
       getDocs(q).then((querySnapshot) => {
        
-        
+        console.log(querySnapshot) 
         setArticles(querySnapshot)
         
         
@@ -126,6 +128,7 @@ const Home = () => {
           .sort((a, b) => b.data().date.seconds - a.data().date.seconds)
           .sort((a, b) => UsePopularityAlgorithm(b.data().likes.length, b.data().date.seconds) - UsePopularityAlgorithm(a.data().likes.length, a.data().date.seconds))
           .filter((doc) => doc.data().tags.includes(filter) || filter === null)
+          .slice(0, page + 1)
           .map((doc) => {
               return <SuggestedPost article={doc.id} articleData={doc.data()} key={doc.id}/>
             })}
@@ -133,9 +136,13 @@ const Home = () => {
           {!loading && !sort && articles && articles.docs && articles.docs
           .sort((a, b) => b.data().date.seconds - a.data().date.seconds)
           .filter((doc) => doc.data().tags.includes(filter) || filter === null)
+          .slice(0, page + 1)
           .map((doc) => {
               return <SuggestedPost article={doc.id} articleData={doc.data()} key={doc.id}/>
             })}
+
+          <button onClick={() => setPage(page + 10)} className="btn my-10">Load More</button>
+              
             
           
         </div>
