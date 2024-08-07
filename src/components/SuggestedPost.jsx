@@ -64,8 +64,8 @@ const SuggestedPost = ({article, articleData}) => {
     <div className='w-full  min-h-[250px] flex cursor-pointer '>
       <div className='w-2/3 flex flex-col justify-between items-start py-10 pr-[2%]'>
         {/* {cachedData.author} */}
-        <h1 className='text-3xl font-bold font-gupter' >{cachedData.title}</h1>
-        <p className='text-md text-gray-500 font-normal'>{cachedData.description}</p>
+        <h1 className='text-xl font-bold font-gupter sm:text-3xl' >{cachedData.title}</h1>
+        <p className='text-md text-gray-500 font-normal'>{cachedData.description.replace(/^(.{100}[^\s]*).*/, "$1") + "\n"}...</p>
         <p className='text-sm text-gray-500 font-normal'>{date}</p>
       </div>
       <div className='w-1/3 flex items-center justify-end'>

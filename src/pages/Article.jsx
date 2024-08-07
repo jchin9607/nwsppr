@@ -71,7 +71,7 @@ const Article = ({loggedIn}) => {
 
   return (
 
-    <div className="w-full flex justify-center mb-[20vh]">
+    <div className="w-full flex justify-center mb-[20vh] mt-[10vh] sm:mt-0">
     <div className="flex flex-col w-[80vw] items-center justify-start min-h-screen pt-[5%]">
       
       <div className="prose prose-sm sm:prose lg:prose-lg w-full">
@@ -87,7 +87,13 @@ const Article = ({loggedIn}) => {
         <ArticleAuthor useruid={cachedData.author} />
         {loggedIn ? <Likes article={cachedData} articleId={articleId}/>
         
-        : <div className="rating gap-1 flex w-full h-full items-center"><input type="radio" name="rating-3" className="mask mask-heart bg-gray-400" /><p>{cachedData.likes.length}</p></div>}
+        : 
+        <div className='h-[50px] items-center w-full'>
+          <div className="rating gap-1 flex w-full h-full items-center">
+            <input type="radio" name="rating-3" className="mask mask-heart bg-gray-400" />
+              <p>{cachedData.likes.length}</p>
+          </div>
+        </div>}
       </div>
       <div className="prose prose-sm sm:prose lg:prose-lg w-full mb-[20px]">
         {cachedData.tags && cachedData.tags.map((tag) => <span className="badge badge-accent mr-2">#{tag}</span>)}

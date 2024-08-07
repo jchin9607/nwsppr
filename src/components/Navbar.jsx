@@ -53,7 +53,7 @@ const Navbar = ({loggedIn}) => {
                   </div>
                 </div>
               </summary>
-              <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+              <ul className="menu dropdown-content bg-base-100 rounded-box z-[10000] w-52 p-2 shadow">
                 <Link to={zuser}><li><a>Profile</a></li></Link>
                 <Link to="/drafts"><li><a>Drafts</a></li></Link>
                 <hr className='w-full h-[1px] my-1'/>
