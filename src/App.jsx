@@ -80,7 +80,7 @@ const App = () => {
         <Route path="/write/" element={user ? <Write/> : <Navigate to="/auth" />}/>
         <Route path="/write/:document" element={user ? <Write /> : <Navigate to="/auth" />}/>
         <Route path="/drafts" element={user ? <Drafts /> : <Navigate to="/auth" />}/>
-        <Route path="/article/:articleId" element={<Article />}/>
+        <Route path="/article/:articleId" element={<Article loggedIn={user}/>}/>
         <Route path="/search/:type/:value" element={user ? <Search /> : <Navigate to="/auth" />}/>
         <Route path="/404" element={<Fourohfour />}/>
         <Route path="*" element={<Navigate to="/404" />}/>

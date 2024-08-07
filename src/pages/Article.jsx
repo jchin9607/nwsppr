@@ -10,7 +10,7 @@ import { Timestamp } from 'firebase/firestore';
 import Likes from '../article/Likes.jsx';
 
 
-const Article = () => {
+const Article = ({loggedIn}) => {
     const {articleId} = useParams()
     const [cachedData, setCachedData] = useState(JSON.parse(localStorage.getItem(articleId)));
     const [loading, setLoading] = useState(true);
@@ -85,7 +85,9 @@ const Article = () => {
       />
       <div className="prose prose-sm sm:prose lg:prose-lg w-full my-[30px] h-[100px]">
         <ArticleAuthor useruid={cachedData.author} />
-        <Likes article={cachedData} articleId={articleId}/>
+        {loggedIn ? <Likes article={cachedData} articleId={articleId}/>
+        
+        : <div className="rating gap-1 flex w-full h-full items-center"><input type="radio" name="rating-3" className="mask mask-heart bg-gray-400" /><p>{cachedData.likes.length}</p></div>}
       </div>
       <div className="prose prose-sm sm:prose lg:prose-lg w-full mb-[20px]">
         {cachedData.tags && cachedData.tags.map((tag) => <span className="badge badge-accent mr-2">#{tag}</span>)}
