@@ -51,7 +51,7 @@ const Profile = () => {
               </div>
           </div>
   
-          <div className="w-full flex flex-col px-[5%]">
+          <div className="w-full flex flex-col px-[5%] h-auto">
               <hr className='border-gray-400'/>
               <GetProfileArticles user={user} draft={false} />
           </div>

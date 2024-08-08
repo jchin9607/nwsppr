@@ -54,7 +54,7 @@ const GetProfileArticles = ({user, draft}) => {
             <>
             <Link to={draft ? '/write/' + article.id : '/article/' + article.id}>
             <div key={article.id}>
-                <div className='w-full  h-[250px] flex cursor-pointer'>
+                <div className='w-full  min-h-[250px] flex cursor-pointer'>
                 <div className='w-2/3 flex flex-col justify-between items-start py-6'>
                     {/* {article.data().author} */}
                     <h1 className='text-3xl font-bold'>{article.data().title || 'Untitled'}</h1>
