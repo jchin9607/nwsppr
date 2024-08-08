@@ -5,7 +5,7 @@ import { db } from '../firebase/firebase';
 import {  useState, useEffect } from 'react';
 import { getDocs } from 'firebase/firestore';
 import UsePopularityAlgorithm from '../hooks/UsePopularityAlgorithm.js';
-
+import ArticleAuthor from '../article/ArticleAuthor.jsx';
 
 
 
@@ -148,7 +148,8 @@ const Home = () => {
         </div>
         <div className='w-1/4  pl-[3%] h-[100%] flex-col hidden lg:flex'>
           <h1 className="">Recommended Users</h1>
-          <h1 className="">Suggested Post</h1>
+            <ArticleAuthor useruid="zfT5WjRouGQKEH1rXWeszeWZJdr2" inArticle={false}/>
+          {/* <h1 className="">Suggested Post</h1> */}
         </div>
       </div>
 

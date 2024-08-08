@@ -2,7 +2,7 @@ import React from 'react'
 import { UseProfileData } from '../hooks/UseProfileData'
 import { Link } from 'react-router-dom'
 
-const ArticleAuthor = ({useruid}) => {
+const ArticleAuthor = ({useruid, inArticle}) => {
     const {profileData, loading, error} = UseProfileData(useruid)
 
     if (loading) {
@@ -15,12 +15,12 @@ const ArticleAuthor = ({useruid}) => {
   return (
     <div className='flex items-center gap-6'>
         <div className="avatar not-prose">
-          <div className="w-20 rounded-full">
+          <div className="w-14 rounded-full">
             <img src={profileData.photoURL} />
           </div>
         </div>
         <div>
-       By: <Link to={'/p/' + profileData.uid}>{profileData.fullName}</Link> 
+       {inArticle && "By:"} <Link to={'/p/' + profileData.uid}>{profileData.fullName}</Link> 
        </div>
     </div>
   )

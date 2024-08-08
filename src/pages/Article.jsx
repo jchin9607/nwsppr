@@ -84,7 +84,7 @@ const Article = ({loggedIn}) => {
       className='prose prose-sm sm:prose lg:prose-lg w-full h-full object-cover mt-[30px]'
       />
       <div className="prose prose-sm sm:prose lg:prose-lg w-full my-[30px] h-[100px]">
-        <ArticleAuthor useruid={cachedData.author} />
+        <ArticleAuthor useruid={cachedData.author} inArticle={true} />
         {loggedIn ? <Likes article={cachedData} articleId={articleId}/>
         
         : 
