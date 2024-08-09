@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /write/
+Disallow: /drafts/
+Disallow: /p/
+Disallow: /search/
+Allow: /
+
