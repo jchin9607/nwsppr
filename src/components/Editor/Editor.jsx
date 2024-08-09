@@ -4,7 +4,7 @@ import StarterKit from '@tiptap/starter-kit'
 import React from 'react'
 import Image from '@tiptap/extension-image'
 import { storage } from '../../firebase/firebase'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from 'uuid';
 import { doc, setDoc, updateDoc, arrayUnion } from "firebase/firestore";
@@ -15,6 +15,8 @@ import { deleteDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom'
 import TagsInput from '../TagsInput/TagsInput.jsx'
 import { Timestamp } from 'firebase/firestore'
+import Link from '@tiptap/extension-link'
+import Youtube from '@tiptap/extension-youtube'
 
 
 
@@ -142,6 +144,11 @@ const MenuBar = ({ editor, editingDraft, titleData, descriptionData, coverData, 
 
   useEffect(() => {
     if (image !== null) {
+
+      if (image.size > 1000000) {
+        alert('image must be less than 1mb');
+        return;
+      }
       
       const imageREF = ref(storage, 'images/' + uuidv4());
       
@@ -166,6 +173,10 @@ const MenuBar = ({ editor, editingDraft, titleData, descriptionData, coverData, 
   }
 
   function addCoverImage (image) {
+    if (image.size > 1000000) {
+      alert('image must be less than 1mb');
+      return;
+    }
     const userData = JSON.parse(localStorage.getItem('user'));
     const coverRef = ref(storage, 'cover/' + uuidv4() +  userData.username + userData.articles.length);
     uploadBytes(coverRef, image).then (() => {
@@ -179,6 +190,40 @@ const MenuBar = ({ editor, editingDraft, titleData, descriptionData, coverData, 
       console.log(error);
     });
   }
+
+  const addYoutubeVideo = () => {
+    const url = prompt('Enter YouTube URL')
+
+    if (url) {
+      editor.commands.setYoutubeVideo({
+        src: url,
+        width: Math.max(320, parseInt(640, 10)) || 640,
+        height: Math.max(180, parseInt(480, 10)) || 480,
+      })
+    }
+  }
+
+  // const setLink = useCallback(() => {
+  //   const previousUrl = editor.getAttributes('link').href
+  //   const url = window.prompt('URL', previousUrl)
+
+  //   // cancelled
+  //   if (url === null) {
+  //     return
+  //   }
+
+  //   // empty
+  //   if (url === '') {
+  //     editor.chain().focus().extendMarkRange('link').unsetLink()
+  //       .run()
+
+  //     return
+  //   }
+
+  //   // update link
+  //   editor.chain().focus().extendMarkRange('link').setLink({ href: url })
+  //     .run()
+  // }, [editor])
 
   return (
     <div className="z-10 control-group w-[100%] relative md:w-[33%] ">
@@ -262,7 +307,11 @@ const MenuBar = ({ editor, editingDraft, titleData, descriptionData, coverData, 
         <button onClick={() => editor.chain().focus().redo().run()}>
           Redo
         </button>
-        <input id="addImage" type="file" onChange={(event) => setAddImage(event.target.files[0])} hidden/>
+        <button id="add" onClick={addYoutubeVideo}>Add YouTube video</button>
+        {/* <button onClick={setLink} className={editor.isActive('link') ? 'is-active' : ''}>
+            Set link
+          </button> */}
+        <input id="addImage" type="file" onChange={(event) => setAddImage(event.target.files[0])} hidden accept='image/*'/>
         <label htmlFor="addImage" className="btn">Add Image</label>
         <hr className="w-full h-1"/>
         
@@ -270,7 +319,7 @@ const MenuBar = ({ editor, editingDraft, titleData, descriptionData, coverData, 
         <>
         <button onClick={handleSaveToDraft}>Save</button>
         <button onClick={()=>document.getElementById('my_modal_3').showModal()}>Publish</button>
-        <input id="addCoverImage" type="file" onChange={ (e) => setCoverImage(e)} hidden/>
+        <input id="addCoverImage" type="file" onChange={ (e) => setCoverImage(e)} hidden accept='image/*'/>
         <label htmlFor="addCoverImage" className="btn">Upload Cover Image</label>
         {cover !== '' || coverData !== '' ? <p>Cover Image Uploaded</p> : <p>No Cover Image</p>}
         </> : <>
@@ -319,9 +368,17 @@ const MenuBar = ({ editor, editingDraft, titleData, descriptionData, coverData, 
 export default ({editing, content, editingDraft, title, description, cover, tags}) => {
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        codeBlock: {
+          HTMLAttributes: {
+            class: 'language-jsx',
+          },
+        }
+      }),
       Dropcursor,
       Image,
+      Link,
+      Youtube,
     ],
     content,
     editorProps: {
@@ -331,6 +388,8 @@ export default ({editing, content, editingDraft, title, description, cover, tags
       },
     },
   })
+
+  
   
   
 

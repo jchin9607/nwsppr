@@ -23,3 +23,8 @@
 button {
   @apply bg-black text-white rounded-md p-2
 }
+
+iframe {
+  aspect-ratio: 16 / 9;
+  width: 90%;
+}

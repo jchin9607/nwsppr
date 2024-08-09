@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@tiptap/extension-image": "^2.5.4",
+    "@tiptap/extension-link": "^2.5.9",
+    "@tiptap/extension-youtube": "^2.5.9",
     "@tiptap/pm": "^2.5.4",
     "@tiptap/react": "^2.5.4",
     "@tiptap/starter-kit": "^2.5.4",
