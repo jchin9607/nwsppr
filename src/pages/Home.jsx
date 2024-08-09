@@ -40,16 +40,10 @@ const Home = () => {
        
         console.log(querySnapshot) 
         setArticles(querySnapshot)
-        
-        
-        
-        setLoading(false)
       });
     }
-    else{
-      
+
     setLoading(false)
-    }
     
   }, []);
 
@@ -77,7 +71,7 @@ const Home = () => {
 
   
   if (loading) {
-    return <LoadingScreen/>
+    return (<LoadingScreen/>)
   }
   
   

@@ -8,6 +8,7 @@ import ArticleAuthor from '../article/ArticleAuthor.jsx';
 import { useNavigate } from 'react-router-dom';
 import { Timestamp } from 'firebase/firestore';
 import Likes from '../article/Likes.jsx';
+import LoadingScreen from './LoadingScreen.jsx';
 
 
 const Article = ({loggedIn}) => {
@@ -65,7 +66,7 @@ const Article = ({loggedIn}) => {
 
   if (loading) {
     return (
-      <div>Loading...</div>
+      <LoadingScreen/>
     )
   }
 

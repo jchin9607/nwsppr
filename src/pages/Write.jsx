@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase/firebase.js'
 import { useNavigate } from 'react-router-dom';
+import LoadingScreen from './LoadingScreen.jsx';
 
 const Write = () => {
   const [loading, setLoading] = useState(true)
@@ -48,6 +49,10 @@ const Write = () => {
       setLoading(false)
     }
   }, [document])
+
+  if (loading) {
+    return <LoadingScreen />
+  }
 
   return (
       <>
