@@ -6,6 +6,8 @@ import {  useState, useEffect } from 'react';
 import { getDocs } from 'firebase/firestore';
 import UsePopularityAlgorithm from '../hooks/UsePopularityAlgorithm.js';
 import ArticleAuthor from '../article/ArticleAuthor.jsx';
+import LoadingScreen from './LoadingScreen.jsx';
+
 
 
 
@@ -74,7 +76,9 @@ const Home = () => {
   }
 
   
-  
+  if (loading) {
+    return <LoadingScreen/>
+  }
   
   
   return (

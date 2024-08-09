@@ -16,6 +16,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Search from './pages/Search.jsx'
 import Fourohfour from './pages/Fourohfour.jsx'
 import Footer from './pages/Footer.jsx'
+
 const App = () => {
   
   const [user, loading, error] = useAuthState(auth)
@@ -62,7 +63,9 @@ const App = () => {
 
   
   if (loading) {
-    return <div>Loading...</div>
+    return (
+      <div>Loading...</div>
+    )
   }
 
   if (error) {

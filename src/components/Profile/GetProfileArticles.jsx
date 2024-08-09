@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { db } from '../../firebase/firebase';
 import { collection, getDocs, query, where, orderBy, deleteDoc, doc } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
+import Loading from '../Loading';
+import SuggestedPost from '../SuggestedPost';
 
 
 
@@ -40,7 +42,9 @@ const GetProfileArticles = ({user, draft}) => {
     }, [location.pathname])
 
     if (loading) {
-        return <p>Loading...</p>
+        return (
+            <Loading />
+        )
     }
 
     if (!articles) {
@@ -52,11 +56,11 @@ const GetProfileArticles = ({user, draft}) => {
     {articles?.docs?.map((article) => {
         return (
             <>
-            <Link to={draft ? '/write/' + article.id : '/article/' + article.id}>
+            {/* <Link to={draft ? '/write/' + article.id : '/article/' + article.id}>
             <div key={article.id}>
                 <div className='w-full  min-h-[250px] flex cursor-pointer'>
                 <div className='w-2/3 flex flex-col justify-between items-start py-6'>
-                    {/* {article.data().author} */}
+                    
                     <h1 className='text-3xl font-bold'>{article.data().title || 'Untitled'}</h1>
                     <p className='text-md color-gray'>{article.data().description || 'No Description'}</p>
                     <p>{article.data().date.toDate().toLocaleDateString("en-us", { year: 'numeric', month: 'long', day: 'numeric' })}</p>
@@ -69,10 +73,11 @@ const GetProfileArticles = ({user, draft}) => {
                     
                 </div>
             </div>
-            </Link>
+            </Link> */}
+
+            <SuggestedPost article={article.id} articleData={article.data()} />
             
             {draft && <button onClick={() => handleDelete(article.id)} className='text-red-500 max-w-[100px]'>Delete</button>}
-            <hr className="border-black" />
             </>
         )
     })}

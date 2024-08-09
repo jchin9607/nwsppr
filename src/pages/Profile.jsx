@@ -8,6 +8,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from '../firebase/firebase.js';
 import GetProfileArticles from '../components/Profile/GetProfileArticles.jsx';
 import { useNavigate } from 'react-router-dom';
+import LoadingScreen from './LoadingScreen.jsx';
 const Profile = () => {
  
   const { user } = useParams();
@@ -18,7 +19,9 @@ const Profile = () => {
   
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <LoadingScreen />
+    )
   }
 
   if (error) {

@@ -7,6 +7,7 @@ import { collection } from "firebase/firestore";
 import SuggestedPost from '../components/SuggestedPost.jsx';
 import ArticleAuthor from '../article/ArticleAuthor.jsx';
 import { useNavigate } from 'react-router-dom';
+import LoadingScreen from './LoadingScreen.jsx';
 
 const Search = () => {
     const {type, value } = useParams()
@@ -57,12 +58,14 @@ const Search = () => {
     }, [type, value])
 
     if (loading) {
-        return <p>Loading...</p>
+        return (
+            <LoadingScreen />
+        )
     }
   return (
     <div className='px-[5%]'>
     {type === "users" && items && items.docs.map((item) => <div><ArticleAuthor useruid={item.data().uid} /></div>)}
-    {type === "articles" && items && items.docs.map((item) => <SuggestedPost article={item.id} />)}
+    {type === "articles" && items && items.docs.map((item) => <SuggestedPost article={item.id} articleData={item.data()} />)}
     </div>
   )
 }

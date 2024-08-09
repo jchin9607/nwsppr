@@ -4,6 +4,8 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 import { Link } from 'react-router-dom'
 import { Timestamp } from 'firebase/firestore';
+import Loading from './Loading';
+
 
 
 const SuggestedPost = ({article, articleData}) => {
@@ -11,15 +13,12 @@ const SuggestedPost = ({article, articleData}) => {
   const [loading, setLoading] = useState(true);
   const [date , setDate] = useState('');
   
-  
-  
   useEffect(() => {
     if (!cachedData) {
-      // fetchArticle();
       
-      localStorage.setItem(article, JSON.stringify(articleData));
-      setCachedData(articleData);
-      setLoading(false);
+        localStorage.setItem(article, JSON.stringify(articleData));
+        setCachedData(articleData);
+      
     }
     else {
       
@@ -30,16 +29,15 @@ const SuggestedPost = ({article, articleData}) => {
         const date = new Date(seconds * 1000 + nanoseconds / 1000000);
         setDate(date.toLocaleDateString("en-us", { year: 'numeric', month: 'long', day: 'numeric' }));
       }
-      setLoading(false);
-
-      setLoading(false);
+      
       
     }
+    setLoading(false);
   }, [cachedData]);
   
   function fetchArticle() {
     
-    // this function will fetch the article from firebase, but it is costly, so i am using a local storage method
+    
     const docRef = doc(db, "articles", article);
     getDoc(docRef).then((docSnap) => {
       if (docSnap.exists()) {
@@ -56,7 +54,9 @@ const SuggestedPost = ({article, articleData}) => {
   }
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <Loading />
+    );
   }
   return (
     <>
