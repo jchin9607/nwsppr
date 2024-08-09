@@ -9,6 +9,7 @@ import { db } from '../firebase/firebase.js';
 import GetProfileArticles from '../components/Profile/GetProfileArticles.jsx';
 import { useNavigate } from 'react-router-dom';
 import LoadingScreen from './LoadingScreen.jsx';
+import { Helmet } from 'react-helmet';
 const Profile = () => {
  
   const { user } = useParams();
@@ -35,6 +36,9 @@ const Profile = () => {
   return (
     
       <div className=" min-h-screen w-full ">
+        <Helmet>
+          <title>{profileData.fullName} | Nwsppr.</title>
+        </Helmet>
           <div className="w-full h-[30vh] bg-slate-400 ">
             <img src={profileData.bannerURL || 'https://www.colorabq.com/cdn/shop/products/C9E6C0_1024x.png?v=1647354715'} alt="" className='w-full h-full object-cover'/>
           </div>

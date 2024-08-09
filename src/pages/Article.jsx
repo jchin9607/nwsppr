@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { Timestamp } from 'firebase/firestore';
 import Likes from '../article/Likes.jsx';
 import LoadingScreen from './LoadingScreen.jsx';
+import { Helmet } from 'react-helmet';
 
 
 const Article = ({loggedIn}) => {
@@ -73,6 +74,9 @@ const Article = ({loggedIn}) => {
   return (
 
     <div className="w-full flex justify-center mb-[20vh] mt-[10vh] sm:mt-0">
+      <Helmet>
+        <title>{cachedData.title} | Nwsppr.</title>
+      </Helmet>
     <div className="flex flex-col w-[80vw] items-center justify-start min-h-screen pt-[5%]">
       
       <div className="prose prose-sm sm:prose lg:prose-lg w-full">

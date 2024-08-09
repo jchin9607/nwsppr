@@ -10,8 +10,8 @@ const Auth = () => {
           <h1 className="text-4xl font-bold sm:text-7xl">For Students,</h1>
           <h1 className="text-4xl font-bold sm:text-7xl">By Students</h1>
         </div>
-        <div><p>🌎 Share your story to students all around the world </p>
-        <p>A place to Write, share, and read </p>
+        <div><p>🌎 Join a free, student-run platform to share your thoughts and ideas.</p>
+        <p>Write and share articles with students worldwide and connect with a global community.</p>
         </div>
         
         <div className='w-[300px]'>

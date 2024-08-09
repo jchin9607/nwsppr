@@ -8,6 +8,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase/firebase.js'
 import { useNavigate } from 'react-router-dom';
 import LoadingScreen from './LoadingScreen.jsx';
+import { Helmet } from 'react-helmet';
 
 const Write = () => {
   const [loading, setLoading] = useState(true)
@@ -56,7 +57,9 @@ const Write = () => {
 
   return (
       <>
-      
+      <Helmet>
+        <title>Write | Nwsppr.</title>
+      </Helmet>
       <div className="p-[2%] pt-[5%] w-[100%]  flex flex-col justify-between relative mb-[50%] gap-10 md:p-[5%] md:flex-row-reverse md:min-h-[90vh] md:mb-0 md:gap-0">
         
         {!loading && <Editor editing={true} content={content} editingDraft={document} title={titleData} description={descriptionData} cover={coverData} tags={tagsData}/>}

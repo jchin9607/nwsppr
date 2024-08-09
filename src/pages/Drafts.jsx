@@ -5,6 +5,7 @@ import { db } from '../firebase/firebase';
 import { Link } from 'react-router-dom'
 import SuggestedPost from '../components/SuggestedPost.jsx'
 import GetProfileArticles from '../components/Profile/GetProfileArticles.jsx';
+import { Helmet } from 'react-helmet';
 const Drafts = () => {
     const [loading, setLoading] = useState(true);
     let userData = JSON.parse(localStorage.getItem('user'))
@@ -39,6 +40,9 @@ const Drafts = () => {
   return (
     
     <div className="w-full px-[15%] min-h-screen">
+      <Helmet>
+        <title>Drafts | Nwsppr.</title>
+      </Helmet>
         <h1 className='text-7xl font-bold my-10'>Your Drafts</h1>
         {/* {!loading && articles && articles.docs && articles.docs.map((doc) => {
               return (
