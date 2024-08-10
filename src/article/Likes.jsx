@@ -19,12 +19,15 @@ const Likes = ({article, articleId}) => {
             updateDoc(docRef, {likes: article.likes.filter((author) => author !== JSON.parse(localStorage.getItem('user')).uid)}).then(() => {
                 handleLike(-1, false)
                 localStorage.setItem(articleId, JSON.stringify({...article, likes: article.likes.filter((author) => author !== JSON.parse(localStorage.getItem('user')).uid)}))
+                console.log(localStorage.getItem(articleId))
             })
             
         } else {
             updateDoc(docRef, {likes: arrayUnion(JSON.parse(localStorage.getItem('user')).uid)}).then(() => {
                 handleLike(1, true)
-                localStorage.setItem(articleId, JSON.stringify({...article, likes: article.likes.concat(JSON.parse(localStorage.getItem('user')).uid)}))
+                const likeCount = JSON.parse(localStorage.getItem(articleId))
+                localStorage.setItem(articleId, JSON.stringify({...article, likes: likeCount.likes.concat(JSON.parse(localStorage.getItem('user')).uid)}))
+                console.log(localStorage.getItem(articleId))
             })
             
         }

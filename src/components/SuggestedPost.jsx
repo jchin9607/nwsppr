@@ -8,7 +8,7 @@ import Loading from './Loading';
 
 
 
-const SuggestedPost = ({article, articleData}) => {
+const SuggestedPost = ({article, articleData, draft}) => {
   const [cachedData, setCachedData] = useState(JSON.parse(localStorage.getItem(article)));
   const [loading, setLoading] = useState(true);
   const [date , setDate] = useState('');
@@ -60,7 +60,7 @@ const SuggestedPost = ({article, articleData}) => {
   }
   return (
     <>
-    <Link to={'/article/' + article}>
+    <Link to={draft ? '/write/' + article : '/article/' + article}>
     <div className='w-full  min-h-[250px] flex cursor-pointer '>
       <div className='w-2/3 flex flex-col justify-between items-start py-10 pr-[2%]'>
         {/* {cachedData.author} */}
