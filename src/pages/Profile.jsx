@@ -10,6 +10,7 @@ import GetProfileArticles from '../components/Profile/GetProfileArticles.jsx';
 import { useNavigate } from 'react-router-dom';
 import LoadingScreen from './LoadingScreen.jsx';
 import { Helmet } from 'react-helmet';
+import Loading from '../components/Loading.jsx';
 const Profile = () => {
  
   const { user } = useParams();
@@ -21,7 +22,21 @@ const Profile = () => {
 
   if (loading) {
     return (
-      <LoadingScreen />
+      <div className="flex w-full flex-col gap-4">
+        <div className="skeleton h-[30vh] w-full"></div>
+        <div className="w-full h-[340px]  px-[5%] flex flex-col gap-5">
+        <div className="skeleton h-10 w-28"></div>
+          <div className="skeleton h-10 w-28"></div>
+          <div className="skeleton h-10 w-full"></div>
+          <div className="skeleton h-10 w-full"></div>
+        </div>
+        <div className="w-full flex flex-col px-[5%] h-auto">
+          <Loading />
+          <Loading />
+          <Loading />
+        </div>
+      </div>
+
     )
   }
 

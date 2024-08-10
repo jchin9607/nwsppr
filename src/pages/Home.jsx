@@ -8,6 +8,7 @@ import UsePopularityAlgorithm from '../hooks/UsePopularityAlgorithm.js';
 import ArticleAuthor from '../article/ArticleAuthor.jsx';
 import LoadingScreen from './LoadingScreen.jsx';
 import { Helmet } from 'react-helmet';
+import Loading from '../components/Loading.jsx';
 
 
 
@@ -141,6 +142,12 @@ const Home = () => {
           .map((doc) => {
               return <SuggestedPost article={doc.id} articleData={doc.data()} key={doc.id}/>
             })}
+
+            {!loading && !articles && <>
+            <Loading/>
+            <Loading/>
+            <Loading/>
+            </>}
 
           <button onClick={() => setPage(page + 10)} className="btn my-10">Load More</button>
               
