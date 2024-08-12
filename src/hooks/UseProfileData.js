@@ -3,18 +3,33 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 
 const UseProfileData = (user) => {
-  const [profileData, setProfileData] = useState(null);
+  const cachedProfileData = JSON.parse(localStorage.getItem(user));
+  const [profileData, setProfileData] = useState(cachedProfileData || null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
+        if (profileData !== null) {
+          
+          if (JSON.parse(localStorage.getItem('user')).uid === user) {
+           
+            setProfileData(JSON.parse(localStorage.getItem("user")));
+          }
+          else {
+            
+            setProfileData(cachedProfileData);
+          }
+          return;
+        }
+        
         const docRef = doc(db, 'users', user);
         const docSnap = await getDoc(docRef);
         
         if (docSnap.exists()) {
           setProfileData(docSnap.data());
+          localStorage.setItem(user, JSON.stringify(docSnap.data()));
         } else {
           setError('No such document!');
         }

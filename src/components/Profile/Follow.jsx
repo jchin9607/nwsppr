@@ -23,7 +23,8 @@ const Follow = ({user, data}) => {
     function handleFollow(  ) {
         setLoading(true)
         updateDoc(doc(db, "users", user), {followers: arrayUnion(ownData.uid)} ).then(() => {
-            
+            const cacheRef = JSON.parse(localStorage.getItem(user))
+            localStorage.setItem(user, JSON.stringify({...cacheRef, followers: cacheRef.followers.concat(ownData.uid)}))
             updateDoc(doc(db, "users", ownData.uid), {following: arrayUnion(user)} ).then(() => {
                 localStorage.setItem('user', JSON.stringify({...ownData, following: ownData.following.concat(user)}))
                 setFollow(true);
@@ -38,6 +39,7 @@ const Follow = ({user, data}) => {
     function handleUnfollow() {
         setLoading(true)
         updateDoc(doc(db, "users", user), {followers: data.followers.filter(f => f !== ownData.uid)} ).then(() => {
+            localStorage.setItem(user, JSON.stringify({...data, followers: data.followers.filter(f => f !== ownData.uid)}))
             updateDoc(doc(db, "users", ownData.uid), {following: ownData.following.filter(f => f !== user)} ).then(() => {
                 localStorage.setItem('user', JSON.stringify({...ownData, following: ownData.following.filter(f => f !== user)}))
                 setFollow(false);

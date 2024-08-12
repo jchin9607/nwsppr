@@ -2,9 +2,10 @@ import React from 'react'
 import { UseProfileData } from '../hooks/UseProfileData'
 import { Link } from 'react-router-dom'
 
-const ArticleAuthor = ({useruid, inArticle}) => {
-    const {profileData, loading, error} = UseProfileData(useruid)
 
+const ArticleAuthor = ({useruid, inArticle, inComment}) => {
+    const {profileData, loading, error} = UseProfileData(useruid)
+    
     if (loading) {
         return <div>Loading...</div>
     }
@@ -21,6 +22,7 @@ const ArticleAuthor = ({useruid, inArticle}) => {
         </div>
         <div>
        {inArticle && "By:"} <Link to={'/p/' + profileData.uid}>{profileData.fullName}</Link> 
+       <div className='text-sm'>{inComment && inComment}</div>
        </div>
     </div>
   )

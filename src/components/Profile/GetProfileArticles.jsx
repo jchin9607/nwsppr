@@ -75,7 +75,7 @@ const GetProfileArticles = ({user, draft}) => {
             </div>
             </Link> */}
 
-            <SuggestedPost article={article.id} articleData={article.data()} draft={draft} />
+            <SuggestedPost article={article.id} articleData={article.data()} draft={draft} key={article.id} />
             
             {draft && <button onClick={() => handleDelete(article.id)} className='text-red-500 max-w-[100px]'>Delete</button>}
             </>

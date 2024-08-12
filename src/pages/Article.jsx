@@ -90,7 +90,7 @@ const Article = ({loggedIn}) => {
       />
       <div className="prose prose-sm sm:prose lg:prose-lg w-full my-[30px] h-[100px]">
         <ArticleAuthor useruid={cachedData.author} inArticle={true} />
-        {loggedIn ? <Likes article={cachedData} articleId={articleId}/>
+        {loggedIn ? <><Likes article={cachedData} articleId={articleId}/></>
         
         : 
         <div className='h-[50px] items-center w-full'>

@@ -38,8 +38,6 @@ const Home = () => {
   useEffect(() => {
     if (!articles) {
       getDocs(q).then((querySnapshot) => {
-       
-        console.log(querySnapshot) 
         setArticles(querySnapshot)
       });
     }
@@ -86,7 +84,7 @@ const Home = () => {
           <p>Topics</p>
           <div>
             <span className="badge badge-accent mr-2 cursor-pointer " onClick={() => setFilter(null)}>All</span>
-            
+            {/* <span className="badge badge-accent mr-2 cursor-pointer " onClick={() => setFilter(null)}>Following</span> */}
             {filterList.map((filter) => <span className="badge badge-accent mr-2 cursor-pointer" key={filter}>
               <div onClick={() => setFilter(filter)}>#{filter}</div>
               <div onClick={() => handleRemoveFilter(filter)} 
