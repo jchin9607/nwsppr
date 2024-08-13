@@ -17,7 +17,7 @@ const ArticleAuthor = ({useruid, inArticle, inComment}) => {
     <div className='flex items-center gap-6'>
         <div className="avatar not-prose">
           <div className="w-14 rounded-full">
-            <img src={profileData.photoURL} />
+            <img src={profileData.photoURL || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} />
           </div>
         </div>
         <div>
