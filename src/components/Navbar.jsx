@@ -42,7 +42,7 @@ const Navbar = ({loggedIn}) => {
         {/* if logged in it would display profile, write, and sign out buttons */}
         {loggedIn && 
         <div className="flex gap-4 items-center">
-            <Link to="/write" >Write</Link>
+            <Link to="/write" className='hidden sm:block'>Write</Link>
             
             <Searchbar />
             <details className="dropdown dropdown-end">
@@ -55,12 +55,13 @@ const Navbar = ({loggedIn}) => {
               </summary>
               <ul className="menu dropdown-content bg-base-100 rounded-box z-[10000] w-52 p-2 shadow">
                 <Link to={zuser}><li><a>Profile</a></li></Link>
+                <Link to="write" className='sm:hidden'><li><a>Write</a></li></Link>
                 <Link to="/drafts"><li><a>Drafts</a></li></Link>
                 <hr className='w-full h-[1px] my-1'/>
                 <p className='cursor-pointer' onClick={() => signOut() }><li><a>Sign Out</a></li></p>
               </ul>
           </details>
-          <label className="swap swap-rotate hidden md:inline-grid">
+          <label className="swap swap-rotate">
             
             <input type="checkbox" className="theme-controller" value="dark" />
 
