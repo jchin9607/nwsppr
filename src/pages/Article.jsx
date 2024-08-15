@@ -75,7 +75,7 @@ const Article = ({loggedIn}) => {
 
     <div className="w-full flex justify-center mb-[20vh] mt-[10vh] sm:mt-0">
       <Helmet>
-        <title>{cachedData.title} | Nwsppr.</title>
+        <title>{cachedData.title} | writeup.</title>
       </Helmet>
     <div className="flex flex-col w-[80vw] items-center justify-start min-h-screen pt-[5%]">
       

@@ -58,7 +58,7 @@ const Write = () => {
   return (
       <>
       <Helmet>
-        <title>Write | Nwsppr.</title>
+        <title>Write | writeup.</title>
       </Helmet>
       <div className="p-[2%] pt-[5%] w-[100%]  flex flex-col justify-between relative mb-[50%] gap-10 md:p-[5%] md:flex-row-reverse md:min-h-[90vh] md:mb-0 md:gap-0">
         

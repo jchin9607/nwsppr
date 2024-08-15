@@ -19,7 +19,7 @@ const Search = () => {
 
     useEffect(() => {
         if (type === "articles") {
-            const q = query(collection(db, type), where("title", ">=", value), where("title", "<=", value + "\uf8ff"));
+            const q = query(collection(db, type), where("title", ">=", value), where("title", "<=", value + "\uf8ff"), where("draft", "==", false));
             getDocs(q).then((querySnapshot) => {
                 
                 if (querySnapshot.size == 0) {
@@ -64,9 +64,9 @@ const Search = () => {
         )
     }
   return (
-    <div className='px-[5%]'>
+    <div className='px-[5%] h-screen pt-[5%]'>
     <Helmet>
-        <title>Search | Nwsppr</title>
+        <title>Search | writeup.</title>
     </Helmet>
     {type === "users" && items && items.docs.map((item) => <div><ArticleAuthor useruid={item.data().uid} /></div>)}
     {type === "articles" && items && items.docs.map((item) => <SuggestedPost article={item.id} articleData={item.data()} />)}

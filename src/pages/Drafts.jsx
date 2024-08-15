@@ -41,7 +41,7 @@ const Drafts = () => {
     
     <div className="w-full px-[15%] min-h-screen">
       <Helmet>
-        <title>Drafts | Nwsppr.</title>
+        <title>Drafts | writeup.</title>
       </Helmet>
         <h1 className='text-7xl font-bold my-10'>Your Drafts</h1>
         {/* {!loading && articles && articles.docs && articles.docs.map((doc) => {

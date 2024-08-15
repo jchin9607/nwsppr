@@ -3,10 +3,10 @@ import Login from '../components/Auth/Login'
 
 const Auth = () => {
   return (
-    <div className=" w-[100%] flex items-center  px-[10vw] flex-col min-h-[200vh] justify-around pb-0 half:flex-row  half:min-h-[100vh]  half:justify-center half:pb-[5%]">
-      <div className="flex flex-col gap-6 h-full w-full half:w-[55%] ">
+    <div className=" w-[100%] flex items-center  px-[10vw] flex-col min-h-[200vh] justify-around pb-0 half:flex-row  half:min-h-[100vh]  half:justify-between half:pb-[5%]">
+      <div className="flex flex-col gap-6 h-full w-full half:w-[45%] ">
         <div>
-          <h3 className="text-2xl font-bold hidden half:block">Nwsppr.</h3>
+          <h3 className="text-2xl font-bold hidden half:block">writeup.</h3>
           <h1 className="text-4xl font-bold sm:text-7xl">For Students,</h1>
           <h1 className="text-4xl font-bold sm:text-7xl">By Students</h1>
         </div>

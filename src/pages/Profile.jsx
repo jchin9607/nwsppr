@@ -52,7 +52,7 @@ const Profile = () => {
     
       <div className=" min-h-screen w-full ">
         <Helmet>
-          <title>{profileData.fullName} | Nwsppr.</title>
+          <title>{profileData.fullName} | writeup.</title>
         </Helmet>
           <div className="w-full h-[30vh] bg-slate-400 ">
             <img src={profileData.bannerURL || 'https://www.colorabq.com/cdn/shop/products/C9E6C0_1024x.png?v=1647354715'} alt="" className='w-full h-full object-cover'/>

@@ -77,7 +77,7 @@ const Home = () => {
   return (
     <div className="px-[5%] min-h-screen">
       <Helmet>
-        <title>Nwsppr.</title>
+        <title>writeup.</title>
       </Helmet>
       <div className="flex w-full h-full justify-center mt-7">
         <div className='flex-col gap-[10px] sticky top-[60px] hidden h-[50%] md:flex md:w-[25%] lg:flex lg:w-1/6  '>
