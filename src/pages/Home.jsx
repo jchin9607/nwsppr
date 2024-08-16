@@ -20,7 +20,7 @@ const Home = () => {
   const [filterList, setFilterList] = useState( JSON.parse(localStorage.getItem('filterList')) || ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'])
   const [sort, setSort] = useState(true)
   const [page, setPage] = useState(10)
-  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000 * 2);
   const q = query(collection(db, "articles")
   
   
@@ -146,8 +146,10 @@ const Home = () => {
             <Loading/>
             <Loading/>
             </>}
-
-          <button onClick={() => setPage(page + 10)} className="btn my-10">Load More</button>
+            
+          
+          
+            <button onClick={() => setPage(page + 10)} className="btn my-10">Load More</button>
               
             
           

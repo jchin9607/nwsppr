@@ -11,6 +11,7 @@ import SuggestedPost from '../SuggestedPost';
 const GetProfileArticles = ({user, draft}) => {
     const [loading , setLoading] = useState(true)
     const [articles , setArticles] = useState([])
+    const [page, setPage] = useState(10)
     
 
     function handleDelete(id) {
@@ -48,12 +49,15 @@ const GetProfileArticles = ({user, draft}) => {
     }
 
     if (!articles) {
-        return <p>No Articles Found</p>
+        return <p>No Articles</p>
     }
+
+   
     
   return (
     <>
-    {articles?.docs?.map((article) => {
+    {!loading && articles.length === 0 && <><Loading /><Loading /><Loading /></>}
+    {!loading && articles && articles?.docs?.slice(0, page).map((article) => {
         return (
             <>
             {/* <Link to={draft ? '/write/' + article.id : '/article/' + article.id}>
@@ -76,12 +80,17 @@ const GetProfileArticles = ({user, draft}) => {
             </Link> */}
 
             <SuggestedPost article={article.id} articleData={article.data()} draft={draft} key={article.id} />
+
+            
             
             {draft && <button onClick={() => handleDelete(article.id)} className='text-red-500 max-w-[100px]'>Delete</button>}
             </>
         )
     })}
-    
+
+        {page < articles?.docs?.length &&
+            <div onClick={() => setPage(page + 10)} className='btn cursor-pointer my-10 max-w-[8rem]'>Load More</div>
+        }
     </>
   )
 }

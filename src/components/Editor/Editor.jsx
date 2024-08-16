@@ -115,8 +115,8 @@ const MenuBar = ({ editor, editingDraft, titleData, descriptionData, coverData, 
     
     setLoading(true)
     const html = editor.getHTML()
-    if (!title || !description || !cover || html.length < 250 || description.length > 110) {
-      alert('Please fill in the title, description, and/or cover image. Content must be at least 250 characters long and description must be less than 110 characters')
+    if (!title || !description || !cover || html.length < 250 || description.length > 1000) {
+      alert('Please fill in the title, description, and/or cover image. Content must be at least 250 characters long and description must be less than 1000 characters')
       setLoading(false)
       return
     }

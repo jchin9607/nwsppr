@@ -47,7 +47,7 @@ const Navbar = ({loggedIn}) => {
             <Searchbar />
             <details className="dropdown dropdown-end">
               <summary className="m-1 list-none cursor-pointer"><div className="avatar">
-                  <div className="w-10 rounded-full">
+                  <div className="w-10 rounded-full bg-slate-400">
                     {avatarImage && <img src={avatarImage} />}
                     {!avatarImage && <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"/>}
                   </div>

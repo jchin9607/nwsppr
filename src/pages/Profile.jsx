@@ -60,7 +60,7 @@ const Profile = () => {
           <div className="w-full h-[340px]  px-[5%]">
               {/* Profile Header and Header */}
               <div className="flex flex-col w-full h-full relative gap-5 top-[-60px]">
-                  <img className="w-[125px] h-[125px] rounded-full object-cover" src={profileData.photoURL || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} alt="Rounded avatar"  />
+                  <img className="w-[125px] h-[125px] rounded-full object-cover bg-slate-400" src={profileData.photoURL || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} alt="Rounded avatar"  />
                   <div className="flex flex-row gap-5"><h1 className="text-3xl font-bold">{profileData.fullName}</h1></div>
                   <h1 className="text-1xl font-normal text-gray-500">@{profileData.username}</h1>
                   <div className='flex gap-3 font-normal text-gray-500'><p>

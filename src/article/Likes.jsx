@@ -4,7 +4,7 @@ import { updateDoc, doc, setDoc, arrayUnion } from "firebase/firestore";
 import { db } from '../firebase/firebase.js'
 import Comment from './Comment.jsx'
 
-const Likes = ({article, articleId}) => {
+const Likes = ({article, articleId, notClickable}) => {
 
     const [likes, setLikes] = useState(article.likes.length)
     const [liked, setLiked] = useState(article.likes.includes(JSON.parse(localStorage.getItem('user')).uid))
@@ -15,6 +15,7 @@ const Likes = ({article, articleId}) => {
     }
 
     function handleLikes() {
+        if (notClickable) return
         const docRef = doc(db, "articles", articleId);
         if (liked) {
             updateDoc(docRef, {likes: article.likes.filter((author) => author !== JSON.parse(localStorage.getItem('user')).uid)}).then(() => {
