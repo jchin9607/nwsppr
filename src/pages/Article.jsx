@@ -39,6 +39,7 @@ const Article = ({loggedIn}) => {
         const date = new Date(seconds * 1000 + nanoseconds / 1000000);
         setDate(date.toLocaleDateString("en-us", { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' }));
       }
+      window.scroll(0, 0);
       setLoading(false);
     }
   }, [cachedData]);

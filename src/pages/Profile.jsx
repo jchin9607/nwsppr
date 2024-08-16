@@ -21,6 +21,7 @@ const Profile = () => {
   
 
   if (loading) {
+    window.scroll(0, 0);
     return (
       <div className="flex w-full flex-col gap-4">
         <div className="skeleton h-[30vh] w-full"></div>
