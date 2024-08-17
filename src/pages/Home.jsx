@@ -17,10 +17,12 @@ const Home = () => {
   const [loading, setLoading] = useState(true)
   const [ articles, setArticles ] = useState(null)
   const [filter , setFilter ] = useState(null)
+  const [filterFollowing, setFilterFollowing] = useState(null)
   const [filterList, setFilterList] = useState( JSON.parse(localStorage.getItem('filterList')) || ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'])
   const [sort, setSort] = useState(true)
   const [page, setPage] = useState(10)
   const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000 * 2);
+  const [currentFilter, setCurrentFilter] = useState(null)
   const q = query(collection(db, "articles")
   
   
@@ -39,11 +41,11 @@ const Home = () => {
     if (!articles) {
       getDocs(q).then((querySnapshot) => {
         setArticles(querySnapshot)
+        console.log(querySnapshot)
       });
     }
 
     setLoading(false)
-    
   }, []);
 
   function handleSort (bool) {
@@ -68,11 +70,23 @@ const Home = () => {
     }
   }
 
+  function sortAll() {
+
+    setFilter(null)
+    setFilterFollowing(null)
+    setCurrentFilter(null)
+  }
+
+  function settingFilter(value) {
+    setFilter(value)
+    setCurrentFilter(value)
+  }
+
   
   if (loading) {
     return (<LoadingScreen/>)
   }
-  
+
   
   return (
     <div className="px-[5%] min-h-screen">
@@ -83,10 +97,11 @@ const Home = () => {
         <div className='flex-col gap-[10px] sticky top-[60px] hidden h-[50%] md:flex md:w-[25%] lg:flex lg:w-1/6  '>
           <p>Topics</p>
           <div>
-            <span className="badge badge-accent mr-2 cursor-pointer " onClick={() => setFilter(null)}>All</span>
+            <span className={!filterFollowing ? "badge badge-accent mr-2 cursor-pointer border-4 border-red-300" : "badge badge-accent mr-2 cursor-pointer "} onClick={() => sortAll()}>All</span>
+            <span className={filterFollowing ? "badge badge-accent mr-2 cursor-pointer border-4 border-red-300" : "badge badge-accent mr-2 cursor-pointer"} onClick={() => setFilterFollowing(JSON.parse(localStorage.getItem('user')).following)}>Following</span>
             {/* <span className="badge badge-accent mr-2 cursor-pointer " onClick={() => setFilter(null)}>Following</span> */}
-            {filterList.map((filter) => <span className="badge badge-accent mr-2 cursor-pointer" key={filter}>
-              <div onClick={() => setFilter(filter)}>#{filter}</div>
+            {filterList.map((filter) => <span className={`badge badge-accent mr-2 cursor-pointer ${currentFilter === filter && 'text-white'}`} key={filter}>
+              <div onClick={() => settingFilter(filter)}>#{filter}</div>
               <div onClick={() => handleRemoveFilter(filter)} 
                 className='text-white cursor-pointer ml-1' 
                 >x</div>
@@ -117,7 +132,7 @@ const Home = () => {
           <SuggestedPost/> */}
           <h1 className="text-6xl font-bold">Trending</h1>
           <div className="dropdown dropdown-hover">
-            <div tabIndex={0} role="button" className="btn m-1">Sort By: {sort ? "Trending <7" : "Newest"}</div>
+            <div tabIndex={0} role="button" className="btn m-1">Sort By: {sort ? "Trending <14" : "Newest"}</div>
             <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
               <li onClick={() => handleSort(true)}><a>Trending</a></li>
               <li onClick={() => handleSort(false)}><a>Newest</a></li>
@@ -127,6 +142,7 @@ const Home = () => {
           {!loading && sort && articles && articles.docs && articles.docs
           .sort((a, b) => b.data().date.seconds - a.data().date.seconds)
           .sort((a, b) => UsePopularityAlgorithm(b.data().likes.length, b.data().date.seconds) - UsePopularityAlgorithm(a.data().likes.length, a.data().date.seconds))
+          .filter((doc) => filterFollowing?.includes(doc.data().author) || filterFollowing === null)
           .filter((doc) => doc.data().tags.includes(filter) || filter === null)
           .slice(0, page + 1)
           .map((doc) => {
@@ -135,6 +151,7 @@ const Home = () => {
 
           {!loading && !sort && articles && articles.docs && articles.docs
           .sort((a, b) => b.data().date.seconds - a.data().date.seconds)
+          .filter((doc) => filterFollowing?.includes(doc.data().author) || filterFollowing === null)
           .filter((doc) => doc.data().tags.includes(filter) || filter === null)
           .slice(0, page + 1)
           .map((doc) => {

@@ -16,6 +16,7 @@
     "@tiptap/pm": "^2.5.4",
     "@tiptap/react": "^2.5.4",
     "@tiptap/starter-kit": "^2.5.4",
+    "dompurify": "^3.1.6",
     "firebase": "^10.12.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

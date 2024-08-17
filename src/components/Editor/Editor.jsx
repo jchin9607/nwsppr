@@ -17,6 +17,7 @@ import TagsInput from '../TagsInput/TagsInput.jsx'
 import { Timestamp } from 'firebase/firestore'
 import Link from '@tiptap/extension-link'
 import Youtube from '@tiptap/extension-youtube'
+import DOMPurify from 'dompurify'
 
 
 
@@ -55,7 +56,7 @@ const MenuBar = ({ editor, editingDraft, titleData, descriptionData, coverData, 
       return
     }
     setLoading(true)
-    const html = editor.getHTML()
+    const html = DOMPurify.sanitize(editor.getHTML())
     
     const linkTitle = title.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '').toLowerCase();
     const docID = userData.username + uuidv4().split('-')[0] + '-' + linkTitle;
@@ -85,7 +86,7 @@ const MenuBar = ({ editor, editingDraft, titleData, descriptionData, coverData, 
       return
     }
     setLoading(true)
-    const html = editor.getHTML()
+    const html = DOMPurify.sanitize(editor.getHTML())
     
     const docID = editingDraft;
     const docRef = doc(db, "articles", docID);
@@ -114,7 +115,7 @@ const MenuBar = ({ editor, editingDraft, titleData, descriptionData, coverData, 
     }
     
     setLoading(true)
-    const html = editor.getHTML()
+    const html = DOMPurify.sanitize(editor.getHTML())
     if (!title || !description || !cover || html.length < 250 || description.length > 1000) {
       alert('Please fill in the title, description, and/or cover image. Content must be at least 250 characters long and description must be less than 1000 characters')
       setLoading(false)
@@ -377,7 +378,9 @@ export default ({editing, content, editingDraft, title, description, cover, tags
       }),
       Dropcursor,
       Image,
-      Link,
+      Link.configure({
+        validate: (href) => /^https?:\/\//.test(href),
+      }),
       Youtube,
     ],
     content,
