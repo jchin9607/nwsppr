@@ -9,6 +9,10 @@ const Comment = ({ comments, articleId }) => {
 
     function addComment(comment) {
         setLoading(true)
+        let articleList = JSON.parse(localStorage.getItem("articlesList"))?.docs || null
+        let articleListItem = articleList ? articleList.find((item) => item.id === articleId) : null
+        const index = articleList?.indexOf(articleListItem)
+
         const docRef = doc(db, "articles", articleId)  
         const commentObject = {
             comment: comment,
@@ -19,6 +23,11 @@ const Comment = ({ comments, articleId }) => {
             localStorage.setItem(articleId, JSON.stringify({...JSON.parse(localStorage.getItem(articleId)), comments: allComments.concat(commentObject)}))
             setAllComments(allComments.concat(commentObject))
             document.getElementById('commentInput').value = ''
+            if (articleListItem) {
+                articleListItem.comments = articleListItem.comments.concat(commentObject)
+                articleList[index] = articleListItem
+                localStorage.setItem("articlesList", JSON.stringify({docs: articleList}))
+            }
         }).catch((error) => {
             console.log(error)
         }).finally(() => {
@@ -32,7 +41,7 @@ const Comment = ({ comments, articleId }) => {
     <div onClick={()=>document.getElementById('commentSection').showModal()} className='h-[30px] w-[30px] ml-3 cursor-pointer bg-transparent'><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 24 24">
 <path d="M12,2C6.477,2,2,6.477,2,12c0,1.592,0.382,3.091,1.043,4.427l-1.005,4.019c-0.229,0.915,0.6,1.745,1.516,1.516 l4.019-1.005C8.909,21.618,10.408,22,12,22c5.523,0,10-4.477,10-10C22,6.477,17.523,2,12,2z" opacity=".35" fill='gray'></path>
 </svg></div>
-    {comments?.length || 0}
+    {allComments?.length || 0}
     <dialog id="commentSection" className="modal">
         <div className="modal-box">
             <form method="dialog">

@@ -16,7 +16,7 @@ import Loading from '../components/Loading.jsx';
 const Home = () => {
   
   const [loading, setLoading] = useState(true)
-  const [ articles, setArticles ] = useState(null)
+  const [ articles, setArticles ] = useState( JSON.parse(localStorage.getItem('articlesList')) || null)
   const [filter , setFilter ] = useState(null)
   const [filterFollowing, setFilterFollowing] = useState(null)
   const [filterList, setFilterList] = useState( JSON.parse(localStorage.getItem('filterList')) || ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'])
@@ -41,8 +41,12 @@ const Home = () => {
   useEffect(() => {
     if (!articles) {
       getDocs(q).then((querySnapshot) => {
-        setArticles(querySnapshot)
-       
+        const data = {
+          docs: querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })),
+        }
+        setArticles(data)
+        localStorage.setItem('articlesList', JSON.stringify(data))
+        console.log(data)
       });
     }
 
@@ -145,22 +149,22 @@ const Home = () => {
           </div>
           <hr className="my-6"/>
           {!loading && sort && articles && articles.docs && articles.docs
-          .sort((a, b) => b.data().date.seconds - a.data().date.seconds)
-          .sort((a, b) => UsePopularityAlgorithm(b.data().likes.length, b.data().date.seconds) - UsePopularityAlgorithm(a.data().likes.length, a.data().date.seconds))
-          .filter((doc) => filterFollowing?.includes(doc.data().author) || filterFollowing === null)
-          .filter((doc) => doc.data().tags.includes(filter) || filter === null)
+          .sort((a, b) => b.date.seconds - a.date.seconds)
+          .sort((a, b) => UsePopularityAlgorithm(b.likes.length, b.date.seconds) - UsePopularityAlgorithm(a.likes.length, a.date.seconds))
+          .filter((doc) => filterFollowing?.includes(doc.author) || filterFollowing === null)
+          .filter((doc) => doc.tags.includes(filter) || filter === null)
           .slice(0, page + 1)
           .map((doc) => {
-              return <SuggestedPost article={doc.id} articleData={doc.data()} key={doc.id}/>
+              return <SuggestedPost article={doc.id} articleData={doc} key={doc.id}/>
             })}
 
           {!loading && !sort && articles && articles.docs && articles.docs
-          .sort((a, b) => b.data().date.seconds - a.data().date.seconds)
-          .filter((doc) => filterFollowing?.includes(doc.data().author) || filterFollowing === null)
-          .filter((doc) => doc.data().tags.includes(filter) || filter === null)
+          .sort((a, b) => b.date.seconds - a.date.seconds)
+          .filter((doc) => filterFollowing?.includes(doc.author) || filterFollowing === null)
+          .filter((doc) => doc.tags.includes(filter) || filter === null)
           .slice(0, page + 1)
           .map((doc) => {
-              return <SuggestedPost article={doc.id} articleData={doc.data()} key={doc.id}/>
+              return <SuggestedPost article={doc.id} articleData={doc} key={doc.id}/>
             })}
 
             {!loading && !articles && <>

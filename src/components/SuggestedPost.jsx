@@ -37,7 +37,7 @@ const SuggestedPost = ({article, articleData, draft}) => {
   }, [cachedData]);
   
   function fetchArticle() {
-    
+    //old method
     
     const docRef = doc(db, "articles", article);
     getDoc(docRef).then((docSnap) => {
@@ -71,7 +71,7 @@ const SuggestedPost = ({article, articleData, draft}) => {
         <Likes article={articleData} articleId={article} notClickable={true}/>
       </div>
       <div className='w-1/3 flex items-center justify-end'>
-      <img loading="lazy" src={cachedData.cover || 'https://images.unsplash.com/photo-1719937206168-f4c829152b91?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'} alt=""
+      <img loading="lazy" src={cachedData.cover || 'https://images.unsplash.com/photo-1719937206168-f4c829152b91?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'} alt={cachedData.title + ' cover'}
       className='w-[225px] h-[175px] object-cover rounded-lg'
       />
       </div>

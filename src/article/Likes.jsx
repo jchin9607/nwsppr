@@ -8,7 +8,7 @@ const Likes = ({article, articleId, notClickable}) => {
 
     const [likes, setLikes] = useState(article.likes.length)
     const [liked, setLiked] = useState(article.likes.includes(JSON.parse(localStorage.getItem('user')).uid))
-
+    
     function handleLike(increment, liked) {
         setLikes(parseInt(likes) + parseInt(increment))
         setLiked(liked)
@@ -17,11 +17,20 @@ const Likes = ({article, articleId, notClickable}) => {
     function handleLikes() {
         if (notClickable) return
         const docRef = doc(db, "articles", articleId);
+        let articleList = JSON.parse(localStorage.getItem("articlesList"))?.docs || null
+        let articleListItem = articleList ? articleList.find((item) => item.id === articleId) : null
+        const index = articleList?.indexOf(articleListItem)
+        
         if (liked) {
             updateDoc(docRef, {likes: article.likes.filter((author) => author !== JSON.parse(localStorage.getItem('user')).uid)}).then(() => {
                 handleLike(-1, false)
                 localStorage.setItem(articleId, JSON.stringify({...article, likes: article.likes.filter((author) => author !== JSON.parse(localStorage.getItem('user')).uid)}))
-               
+                if (articleListItem) {
+                    articleListItem.likes = articleListItem.likes.filter((author) => author !== JSON.parse(localStorage.getItem('user')).uid)
+                    articleList[index] = articleListItem
+                    localStorage.setItem("articlesList", JSON.stringify({docs: articleList}))
+                    
+                }
             })
             
         } else {
@@ -29,7 +38,12 @@ const Likes = ({article, articleId, notClickable}) => {
                 handleLike(1, true)
                 const likeCount = JSON.parse(localStorage.getItem(articleId))
                 localStorage.setItem(articleId, JSON.stringify({...article, likes: likeCount.likes.concat(JSON.parse(localStorage.getItem('user')).uid)}))
-               
+                if (articleListItem) {
+                    articleListItem.likes = articleListItem.likes.concat(JSON.parse(localStorage.getItem('user')).uid)
+                    articleList[index] = articleListItem
+                    localStorage.setItem("articlesList", JSON.stringify({docs: articleList}))
+                    
+                }
             })
             
         }
