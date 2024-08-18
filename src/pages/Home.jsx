@@ -12,6 +12,7 @@ import Loading from '../components/Loading.jsx';
 
 
 
+
 const Home = () => {
   
   const [loading, setLoading] = useState(true)
@@ -41,7 +42,7 @@ const Home = () => {
     if (!articles) {
       getDocs(q).then((querySnapshot) => {
         setArticles(querySnapshot)
-        console.log(querySnapshot)
+       
       });
     }
 
@@ -49,10 +50,7 @@ const Home = () => {
   }, []);
 
   function handleSort (bool) {
-
     setSort(bool)
-   
-    
   }
 
   function handleAddFilter(value) {
@@ -70,16 +68,22 @@ const Home = () => {
     }
   }
 
-  function sortAll() {
-
-    setFilter(null)
-    setFilterFollowing(null)
-    setCurrentFilter(null)
+  function sortAll(callback) {
+    setFilter(null, callback);
+    setFilterFollowing(null, callback);
+    setCurrentFilter(null, callback);
   }
 
   function settingFilter(value) {
-    setFilter(value)
-    setCurrentFilter(value)
+    if (currentFilter === value) {
+      setFilter(null)
+      setCurrentFilter(null)
+    }
+    else 
+    {
+      setFilter(value)
+      setCurrentFilter(value)
+    }
   }
 
   
@@ -97,8 +101,9 @@ const Home = () => {
         <div className='flex-col gap-[10px] sticky top-[60px] hidden h-[50%] md:flex md:w-[25%] lg:flex lg:w-1/6  '>
           <p>Topics</p>
           <div>
-            <span className={!filterFollowing ? "badge badge-accent mr-2 cursor-pointer border-4 border-red-300" : "badge badge-accent mr-2 cursor-pointer "} onClick={() => sortAll()}>All</span>
-            <span className={filterFollowing ? "badge badge-accent mr-2 cursor-pointer border-4 border-red-300" : "badge badge-accent mr-2 cursor-pointer"} onClick={() => setFilterFollowing(JSON.parse(localStorage.getItem('user')).following)}>Following</span>
+            <span className={!filterFollowing ? "badge badge-accent mr-2 cursor-pointer border-4 text-white" : "badge badge-accent mr-2 cursor-pointer "} onClick={() => sortAll()}>All</span>
+            <span className={filterFollowing ? "badge badge-accent mr-2 cursor-pointer border-4 text-white" : "badge badge-accent mr-2 cursor-pointer"} onClick={() => setFilterFollowing(JSON.parse(localStorage.getItem('user')).following)}>Following</span>
+            <div className="divider my-0 w-[85%]"></div>
             {/* <span className="badge badge-accent mr-2 cursor-pointer " onClick={() => setFilter(null)}>Following</span> */}
             {filterList.map((filter) => <span className={`badge badge-accent mr-2 cursor-pointer ${currentFilter === filter && 'text-white'}`} key={filter}>
               <div onClick={() => settingFilter(filter)}>#{filter}</div>
