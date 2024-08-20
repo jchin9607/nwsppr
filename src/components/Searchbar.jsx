@@ -15,7 +15,7 @@ const Searchbar = () => {
   return (
     <>
     
-        <button className="btn btn-ghost btn-circle" onClick={()=>document.getElementById('my_modal_1').showModal()}>
+        <button className="btn btn-ghost btn-circle" aria-label="Search" onClick={()=>document.getElementById('my_modal_1').showModal()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"

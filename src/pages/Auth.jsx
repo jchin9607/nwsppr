@@ -25,7 +25,7 @@ const Auth = () => {
         <div className="mockup-window border-base-300 border w-full h-full ">
           <div className="border-base-300 flex flex-col justify-center items-center border-t px-4 py-16 gap-3">
             <h1 className="text-center font-bold text-2xl ">The History of the Planets</h1>
-            <h3 className="text-center px-[15%]" >Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, nulla.</h3>
+            <h2 className="text-center px-[15%]" >Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, nulla.</h2>
             <img src="https://t4.ftcdn.net/jpg/03/90/44/31/360_F_390443161_kePNWkpdy36iQT15C9t32zY3brRlXzO8.jpg" alt="" />
             </div>
         </div>

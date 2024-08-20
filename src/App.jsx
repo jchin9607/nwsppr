@@ -25,8 +25,9 @@ const App = () => {
   // checking if new user or not, put it here because it reads data once every render
   if (user) {
     
-    
+    const filterList = JSON.parse(localStorage.getItem("filterList"))
     localStorage.clear();
+    localStorage.setItem("filterList", JSON.stringify(filterList))
     const docRef = doc(db, "users", user.uid);
     getDoc(docRef).then((docSnap) => {
       if (docSnap.exists()) {

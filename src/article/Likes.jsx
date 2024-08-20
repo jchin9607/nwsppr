@@ -52,8 +52,8 @@ const Likes = ({article, articleId, notClickable}) => {
     <div className='h-[50px] items-center w-full'>
         <div className="rating gap-1 flex w-full h-full items-center">
             {liked 
-            ? <><input type="radio" name="rating-3" className="mask mask-heart bg-red-400"  onClick={handleLikes}/></>
-            : <input type="radio" name="rating-3" className="mask mask-heart bg-gray-400"  onClick={handleLikes}/>}
+            ? <><input type="radio" name="rating-3" className="mask mask-heart bg-red-400"  onClick={handleLikes} aria-label="Unlike"/></>
+            : <input type="radio" name="rating-3" className="mask mask-heart bg-gray-400"  onClick={handleLikes} aria-label="Like"/>}
             <p>{likes}</p>
             <Comment comments={article.comments} articleId={articleId}/>
         </div>

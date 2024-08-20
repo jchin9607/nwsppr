@@ -63,7 +63,7 @@ const Navbar = ({loggedIn}) => {
           </details>
           <label className="swap swap-rotate">
             
-            <input type="checkbox" className="theme-controller" value="dark" />
+            <input type="checkbox" className="theme-controller" value="dark" aria-label="Toggle theme"/>
 
             
             <svg
