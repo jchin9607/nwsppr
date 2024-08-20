@@ -46,7 +46,7 @@ const Home = () => {
         }
         setArticles(data)
         localStorage.setItem('articlesList', JSON.stringify(data))
-        console.log(data)
+        
       });
     }
 
@@ -94,7 +94,6 @@ const Home = () => {
   if (loading) {
     return (<LoadingScreen/>)
   }
-
   
   return (
     <div className="px-[5%] min-h-screen">

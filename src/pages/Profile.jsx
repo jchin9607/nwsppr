@@ -3,9 +3,6 @@ import { useParams } from 'react-router-dom';
 import SuggestedPost from '../components/SuggestedPost';
 import {UseProfileData} from '../hooks/UseProfileData.js';
 import FollowOrEdit from '../components/Profile/FollowOrEdit.jsx';
-import { useState,  } from 'react';
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from '../firebase/firebase.js';
 import GetProfileArticles from '../components/Profile/GetProfileArticles.jsx';
 import { useNavigate } from 'react-router-dom';
 import LoadingScreen from './LoadingScreen.jsx';
@@ -15,8 +12,6 @@ const Profile = () => {
  
   const { user } = useParams();
   const { profileData, loading, error } = UseProfileData(user);
-  const ownData = JSON.parse(localStorage.getItem("user"))
-  
   const navigate = useNavigate();
   
 

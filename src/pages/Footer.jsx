@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
@@ -18,7 +19,9 @@ const Footer = () => {
         <p className='text-3xl'></p>
         <p className="text-[8vw]">©writeup.</p>
       </div>
-      <div className="flex w-full h-full border-black border-1 justify-center items-center gap-10 text-xs">
+      <div className="flex w-full h-full justify-center items-center gap-10 text-xs flex-col mb-5 sm:flex-row">
+            <Link to="/team">Team</Link>
+            <a href="">Donate</a>
             <a href="">Join Our Team</a>
             <a href="">Contact Us</a>
             <a href="">Terms of Service</a>

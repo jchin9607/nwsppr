@@ -10,12 +10,12 @@ import { auth } from './firebase/firebase.js'
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from './firebase/firebase.js'
 import Drafts from './pages/Drafts.jsx'
-import { useState } from 'react'
 import Article from './pages/Article.jsx'
 import { v4 as uuidv4 } from 'uuid';
 import Search from './pages/Search.jsx'
 import Fourohfour from './pages/Fourohfour.jsx'
 import Footer from './pages/Footer.jsx'
+import OurTeam from './pages/OurTeam.jsx'
 
 const App = () => {
   
@@ -23,8 +23,6 @@ const App = () => {
   
   
   // checking if new user or not, put it here because it reads data once every render
-  
-  
   if (user) {
     
     
@@ -32,13 +30,16 @@ const App = () => {
     const docRef = doc(db, "users", user.uid);
     getDoc(docRef).then((docSnap) => {
       if (docSnap.exists()) {
-       localStorage.setItem("user", JSON.stringify(docSnap.data()))
+        const data = {
+          ...docSnap.data(),
+          email: null
+        }
+       localStorage.setItem("user", JSON.stringify(data))
        
         
       } else {
         const data = {
           fullName: user.displayName,
-          email: user.email,
           username: user.email.split('@')[0] + uuidv4().split('-')[0],
           photoURL: user.photoURL,
           uid: user.uid,
@@ -86,6 +87,7 @@ const App = () => {
         <Route path="/article/:articleId" element={<Article loggedIn={user}/>}/>
         <Route path="/search/:type/:value" element={user ? <Search /> : <Navigate to="/auth" />}/>
         <Route path="/404" element={<Fourohfour />}/>
+        <Route path="/team" element={<OurTeam />}/>
         <Route path="*" element={<Navigate to="/404" />}/>
       </Routes>
     </div>

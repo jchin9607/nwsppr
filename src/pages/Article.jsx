@@ -27,7 +27,6 @@ const Article = ({loggedIn}) => {
   useEffect(() => {
     if (!cachedData) {
       fetchArticle();
-      console.log('fetching article');
     }
     else {
       

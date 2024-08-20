@@ -29,7 +29,11 @@ const UseProfileData = (user) => {
         
         if (docSnap.exists()) {
           setProfileData(docSnap.data());
-          localStorage.setItem(user, JSON.stringify(docSnap.data()));
+          const data = {
+            ...docSnap.data(),
+            email: "haha you thought this was an email"
+          }
+          localStorage.setItem(user, JSON.stringify(data));
         } else {
           setError('No such document!');
         }
