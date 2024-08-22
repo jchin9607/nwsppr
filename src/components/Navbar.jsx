@@ -57,6 +57,7 @@ const Navbar = ({loggedIn}) => {
                 <Link to={zuser}><li><a>Profile</a></li></Link>
                 <Link to="write" className='sm:hidden'><li><a>Write</a></li></Link>
                 <Link to="/drafts"><li><a>Drafts</a></li></Link>
+                <Link to="/settings"><li><a>Settings</a></li></Link>
                 <hr className='w-full h-[1px] my-1'/>
                 <p className='cursor-pointer' onClick={() => signOut() }><li><a>Sign Out</a></li></p>
               </ul>

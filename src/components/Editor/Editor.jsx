@@ -4,7 +4,7 @@ import StarterKit from '@tiptap/starter-kit'
 import React from 'react'
 import Image from '@tiptap/extension-image'
 import { storage } from '../../firebase/firebase'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect,} from 'react'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from 'uuid';
 import { doc, setDoc, updateDoc, arrayUnion } from "firebase/firestore";
@@ -14,10 +14,11 @@ import { auth } from '../../firebase/firebase.js'
 import { deleteDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom'
 import TagsInput from '../TagsInput/TagsInput.jsx'
-import { Timestamp } from 'firebase/firestore'
+
 import Link from '@tiptap/extension-link'
 import Youtube from '@tiptap/extension-youtube'
 import DOMPurify from 'dompurify'
+import ImageResize from 'tiptap-extension-resize-image';
 
 
 
@@ -375,9 +376,12 @@ export default ({editing, content, editingDraft, title, description, cover, tags
             class: 'language-jsx',
           },
         }
+
       }),
+      
       Dropcursor,
       Image,
+      ImageResize,
       Link.configure({
         validate: (href) => /^https?:\/\//.test(href),
       }),
@@ -386,7 +390,7 @@ export default ({editing, content, editingDraft, title, description, cover, tags
     content,
     editorProps: {
       attributes: {
-        class:"prose prose-sm sm:prose lg:prose-lg focus:outline-none w-full",
+        class:"prose prose-sm sm:prose lg:prose-lg focus:outline-none w-full sm:w-[50vw]",
         spellcheck: 'false',
       },
     },

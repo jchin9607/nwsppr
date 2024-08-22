@@ -1,9 +1,5 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from '../firebase/firebase';
-import { Link } from 'react-router-dom'
-import SuggestedPost from '../components/SuggestedPost.jsx'
 import GetProfileArticles from '../components/Profile/GetProfileArticles.jsx';
 import { Helmet } from 'react-helmet';
 const Drafts = () => {

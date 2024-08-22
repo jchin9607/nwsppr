@@ -20,9 +20,9 @@ const Footer = () => {
         <p className="text-[8vw]">©writeup.</p>
       </div>
       <div className="flex w-full h-full justify-center items-center gap-10 text-xs flex-col mb-5 sm:flex-row">
-            <Link to="/team">Team</Link>
+            <Link to="/team">Our Team</Link>
             <a href="">Donate</a>
-            <a href="">Join Our Team</a>
+            <a href="https://forms.gle/X9bYG5JYJnMMrLy56" target='_blank'>Contribute</a>
             <a href="">Contact Us</a>
             <a href="">Terms of Service</a>
             <a href="">Privacy Policy</a>

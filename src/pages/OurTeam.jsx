@@ -12,7 +12,7 @@ const OurTeam = () => {
         {
             image: "https://ik.imagekit.io/64c35uuyg/b4stembio/ian.jpg?updatedAt=1711050748800",
             name: 'Ian C.',
-            about: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, nulla.'
+            about: "6'3, feminist, 19th amendment supporter"
         },
         {
             image: "https://ik.imagekit.io/64c35uuyg/b4stembio/dhruva.jpg?updatedAt=1711050748800",

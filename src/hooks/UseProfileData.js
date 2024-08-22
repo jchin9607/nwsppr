@@ -35,7 +35,7 @@ const UseProfileData = (user) => {
           }
           localStorage.setItem(user, JSON.stringify(data));
         } else {
-          setError('No such document!');
+          setError('Deleted User');
         }
       } catch (err) {
         setError(`Error getting document: ${err.message}`);

@@ -94,7 +94,10 @@ const Edit = ({userURL, data}) => {
                                 
                                 handleBannerUpload()
                             }
-                            else window.location.reload()
+                            else {
+                                localStorage.setItem('user', JSON.stringify({...data, userObject}))
+                                window.location.reload()
+                            }
                         }
                     }).catch(error => {
                         console.log(error);
@@ -115,7 +118,10 @@ const Edit = ({userURL, data}) => {
                     if (userObject.bannerURL !== data.bannerURL) {
                         handleBannerUpload()
                     }
-                    else window.location.reload()
+                    else {
+                        localStorage.setItem('user', JSON.stringify({...data, userObject}))
+                        window.location.reload()
+                    }
                 }
             }).catch(error => {
                 console.log(error);
@@ -128,6 +134,7 @@ const Edit = ({userURL, data}) => {
     function handleUpload() {
         if (userObject.photoURL === data.photoURL) {
            
+                localStorage.setItem('user', JSON.stringify({...data, userObject}))
                 window.location.reload() 
                 return
             
@@ -146,7 +153,10 @@ const Edit = ({userURL, data}) => {
                     if (userObject.bannerURL !== data.bannerURL) {
                         handleBannerUpload()
                     }
-                    else window.location.reload()
+                    else {
+                        localStorage.setItem('user', JSON.stringify({...data, userObject}))
+                        window.location.reload()
+                    }
                             
                         
                     
@@ -167,7 +177,8 @@ const Edit = ({userURL, data}) => {
                     
                 }).then(() => {
                     
-                                window.location.reload()
+                    localStorage.setItem('user', JSON.stringify({...data, userObject}))
+                    window.location.reload()
                             
                         
                     
@@ -178,8 +189,8 @@ const Edit = ({userURL, data}) => {
 
   return (
     <>
-        <button onClick={()=>document.getElementById('my_modal_5').showModal()}>Edit</button>
-        <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+        <button onClick={()=>document.getElementById('editUser').showModal()}>Edit Profile</button>
+        <dialog id="editUser" className="modal modal-bottom sm:modal-middle">
         <div className="modal-box flex flex-col gap-[10px]">
             <h2 className="font-bold text-lg">Edit Profile</h2>
             {/* <p className="py-4">Press ESC key or click the button below to close</p> */}

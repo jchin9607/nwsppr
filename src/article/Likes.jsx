@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { updateDoc, doc, setDoc, arrayUnion } from "firebase/firestore";
 import { db } from '../firebase/firebase.js'
 import Comment from './Comment.jsx'
+import Flag from './Flag.jsx'
 
 const Likes = ({article, articleId, notClickable}) => {
 
@@ -56,6 +57,7 @@ const Likes = ({article, articleId, notClickable}) => {
             : <input type="radio" name="rating-3" className="mask mask-heart bg-gray-400"  onClick={handleLikes} aria-label="Like"/>}
             <p>{likes}</p>
             <Comment comments={article.comments} articleId={articleId}/>
+            {!notClickable && <Flag />}
         </div>
     </div>
   )

@@ -16,6 +16,7 @@ import Search from './pages/Search.jsx'
 import Fourohfour from './pages/Fourohfour.jsx'
 import Footer from './pages/Footer.jsx'
 import OurTeam from './pages/OurTeam.jsx'
+import Settings from './pages/Settings.jsx'
 
 const App = () => {
   
@@ -24,9 +25,13 @@ const App = () => {
   
   // checking if new user or not, put it here because it reads data once every render
   if (user) {
-    
     const filterList = JSON.parse(localStorage.getItem("filterList"))
-    localStorage.clear();
+    const lastCacheRefresh = parseInt(localStorage.getItem("lastCacheRefresh"))
+    const now = Math.floor(Date.now() / 1000); 
+    if (now - lastCacheRefresh > 60 || !lastCacheRefresh) {
+      localStorage.clear();
+      localStorage.setItem("lastCacheRefresh", now)
+    }
     localStorage.setItem("filterList", JSON.stringify(filterList))
     const docRef = doc(db, "users", user.uid);
     getDoc(docRef).then((docSnap) => {
@@ -66,7 +71,9 @@ const App = () => {
   
   if (loading) {
     return (
-      <div>Loading...</div>
+      <div className='w-full h-screen flex justify-center items-center'>
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
     )
   }
 
@@ -89,6 +96,7 @@ const App = () => {
         <Route path="/search/:type/:value" element={user ? <Search /> : <Navigate to="/auth" />}/>
         <Route path="/404" element={<Fourohfour />}/>
         <Route path="/team" element={<OurTeam />}/>
+        <Route path="/settings" element={user ? <Settings /> : <Navigate to="/auth" />}/>
         <Route path="*" element={<Navigate to="/404" />}/>
       </Routes>
     </div>

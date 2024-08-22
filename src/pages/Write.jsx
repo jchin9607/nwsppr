@@ -46,7 +46,7 @@ const Write = () => {
 
         })
     } else {
-      setContent('Write something here...                                      ')
+      setContent('Write something here...   ')
       setLoading(false)
     }
   }, [document])
