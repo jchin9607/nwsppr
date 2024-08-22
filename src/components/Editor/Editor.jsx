@@ -102,6 +102,7 @@ const MenuBar = ({ editor, editingDraft, titleData, descriptionData, coverData, 
       // }).catch(error => {
       //   console.log(error);
       // });
+      localStorage.removeItem(docID);
       setLoading(false);
     }).catch(error => {
       console.log(error);
