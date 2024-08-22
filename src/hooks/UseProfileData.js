@@ -17,7 +17,7 @@ const UseProfileData = (user) => {
           if (JSON.parse(localStorage.getItem('user')).uid === user) {
            
             setProfileData(JSON.parse(localStorage.getItem("user")));
-            console.log('profileData is not null');
+            
           }
           else {
             

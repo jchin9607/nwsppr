@@ -96,7 +96,7 @@ const Edit = ({userURL, data}) => {
                             }
                             else {
                                 
-                                localStorage.clear('user')
+                                localStorage.clear()
                                 window.location.reload()
                             }
                         }
@@ -121,7 +121,7 @@ const Edit = ({userURL, data}) => {
                     }
                     else {
                         
-                        localStorage.clear('user')
+                        localStorage.clear()
                         window.location.reload()
                     }
                 }
@@ -137,7 +137,7 @@ const Edit = ({userURL, data}) => {
         if (userObject.photoURL === data.photoURL) {
            
                 
-                localStorage.clear('user')
+                localStorage.clear()
                 window.location.reload() 
                 return
             
@@ -158,7 +158,7 @@ const Edit = ({userURL, data}) => {
                     }
                     else {
                         
-                        localStorage.clear('user')
+                        localStorage.clear()
                         window.location.reload()
                     }
                             
@@ -182,7 +182,7 @@ const Edit = ({userURL, data}) => {
                 }).then(() => {
                     
                     
-                    localStorage.clear('user')
+                    localStorage.clear()
                     window.location.reload()
                             
                         
