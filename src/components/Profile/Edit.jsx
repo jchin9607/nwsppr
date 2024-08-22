@@ -95,8 +95,8 @@ const Edit = ({userURL, data}) => {
                                 handleBannerUpload()
                             }
                             else {
-                                localStorage.setItem('user', JSON.stringify({...data, userObject}))
-                                localStorage.setItem(userURL, JSON.stringify({...data, userObject}))
+                                
+                                localStorage.clear('user')
                                 window.location.reload()
                             }
                         }
@@ -120,8 +120,8 @@ const Edit = ({userURL, data}) => {
                         handleBannerUpload()
                     }
                     else {
-                        localStorage.setItem('user', JSON.stringify({...data, userObject}))
-                        localStorage.setItem(userURL, JSON.stringify({...data, userObject}))
+                        
+                        localStorage.clear('user')
                         window.location.reload()
                     }
                 }
@@ -136,8 +136,8 @@ const Edit = ({userURL, data}) => {
     function handleUpload() {
         if (userObject.photoURL === data.photoURL) {
            
-                localStorage.setItem('user', JSON.stringify({...data, userObject}))
-                localStorage.setItem(userURL, JSON.stringify({...data, userObject}))
+                
+                localStorage.clear('user')
                 window.location.reload() 
                 return
             
@@ -157,8 +157,8 @@ const Edit = ({userURL, data}) => {
                         handleBannerUpload()
                     }
                     else {
-                        localStorage.setItem('user', JSON.stringify({...data, userObject}))
-                        localStorage.setItem(userURL, JSON.stringify({...data, userObject}))
+                        
+                        localStorage.clear('user')
                         window.location.reload()
                     }
                             
@@ -181,8 +181,8 @@ const Edit = ({userURL, data}) => {
                     
                 }).then(() => {
                     
-                    localStorage.setItem('user', JSON.stringify({...data, userObject}))
-                    localStorage.setItem(userURL, JSON.stringify({...data, userObject}))
+                    
+                    localStorage.clear('user')
                     window.location.reload()
                             
                         

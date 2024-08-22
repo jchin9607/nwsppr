@@ -11,11 +11,13 @@ const UseProfileData = (user) => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
+        
         if (profileData !== null) {
           
           if (JSON.parse(localStorage.getItem('user')).uid === user) {
            
             setProfileData(JSON.parse(localStorage.getItem("user")));
+            console.log('profileData is not null');
           }
           else {
             
