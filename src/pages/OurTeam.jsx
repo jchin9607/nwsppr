@@ -6,18 +6,18 @@ const OurTeam = () => {
     const teamObject = [
         {
             image: "https://ik.imagekit.io/64c35uuyg/b4stembio/lucas.png?updatedAt=1711050748800",
-            name: 'Lucas C.',
-            about: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, nulla.'
+            name: 'Lucas',
+            about: 'Web Dev'
         },
         {
             image: "https://ik.imagekit.io/64c35uuyg/b4stembio/ian.jpg?updatedAt=1711050748800",
-            name: 'Ian C.',
-            about: "6'3, feminist, 19th amendment supporter"
+            name: 'Ian',
+            about: "Social Media Manager"
         },
         {
             image: "https://ik.imagekit.io/64c35uuyg/b4stembio/dhruva.jpg?updatedAt=1711050748800",
-            name: 'Dhruva S.',
-            about: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, nulla.'
+            name: 'Dhruva',
+            about: 'DevOps'
         }
     ]
 

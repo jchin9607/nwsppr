@@ -5,7 +5,6 @@ import { auth } from '../../firebase/firebase.js'
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from '../../firebase/firebase.js'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { v4 as uuidv4 } from 'uuid';
 import { storage } from '../../firebase/firebase.js'
 import { collection, query, where, getDocs } from "firebase/firestore";
 const Edit = ({userURL, data}) => {

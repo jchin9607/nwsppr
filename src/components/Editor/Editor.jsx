@@ -5,7 +5,7 @@ import React from 'react'
 import Image from '@tiptap/extension-image'
 import { storage } from '../../firebase/firebase'
 import { useState, useEffect,} from 'react'
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL, listAll, deleteObject } from "firebase/storage";
 import { v4 as uuidv4 } from 'uuid';
 import { doc, setDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from '../../firebase/firebase'
@@ -41,10 +41,10 @@ const MenuBar = ({ editor, editingDraft, titleData, descriptionData, coverData, 
   const [tags, setTags] = useState(tagsData)
   const [cover , setCover] = useState(coverData)
 
-  const addImage = (url) => {
+  const addImage = (url, id) => {
   
     if (url) {
-      editor.chain().focus().insertContent('<div><img src="' + url + '" /></div>').run();
+      editor.chain().focus().insertContent('<div><img alt="Article Image" id="' + id + '" src="' + url + '" /></div>').run();
     }
   }
   
@@ -60,7 +60,7 @@ const MenuBar = ({ editor, editingDraft, titleData, descriptionData, coverData, 
     const html = DOMPurify.sanitize(editor.getHTML())
     
     const linkTitle = title.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '').toLowerCase();
-    const docID = userData.username + uuidv4().split('-')[0] + '-' + linkTitle;
+    const docID = userData.uid + userData.username + uuidv4() + '-' + linkTitle;
     const docRef = doc(db, "articles", docID);
     setDoc(docRef, {content: html, title: title, author: userData.uid, date: new Date(), draft: true, description: description, cover: cover, tags: tags, likes: [], popularity: 0}).then (() => {
       
@@ -80,6 +80,35 @@ const MenuBar = ({ editor, editingDraft, titleData, descriptionData, coverData, 
     });
   }
 
+  function deleteUnusedImages() {
+    const folder = editingDraft + '/';
+    const listRef = ref(storage, 'images/' + folder);
+    
+    listAll(listRef)
+      .then((res) => {
+        const allArticleImages = Array.from(document.querySelectorAll('img')).map(img => img.id);
+        console.log(allArticleImages);
+        console.log(res.items);
+        res.items.forEach((itemRef) => {
+          if (!allArticleImages.includes(itemRef.name))
+          {
+            deleteObject(ref(storage, 'images/' + folder + itemRef.name)).then(() => {
+              console.log('image deleted');
+            }).catch((error) => {
+              return;
+            });
+            
+          }
+        });
+        
+      })
+      .catch((error) => {
+        console.log(error);
+      }).finally(() => {
+        return;
+      });
+  }
+
   function handleSaveToDraft () {
     const userData = JSON.parse(localStorage.getItem('user'))
     if (!userData) {
@@ -92,16 +121,7 @@ const MenuBar = ({ editor, editingDraft, titleData, descriptionData, coverData, 
     const docID = editingDraft;
     const docRef = doc(db, "articles", docID);
     setDoc(docRef, {content: html, title: title, author: userData.uid, date: new Date(), draft: true, description: description, cover: cover, tags: tags, likes: [], popularity: 0}).then (() => {
-      // console.log(user);
-      // const docAuthorRef = doc(db, "users", user.uid);
-      // updateDoc(docAuthorRef, {articles: arrayUnion(docID)}).then (() => {
-      //   console.log('Article Saved');
-      //   setLoading(false);
-        
-      //   window.location.replace('/write/' + docID);
-      // }).catch(error => {
-      //   console.log(error);
-      // });
+      deleteUnusedImages();
       localStorage.removeItem(docID);
       setLoading(false);
     }).catch(error => {
@@ -123,11 +143,13 @@ const MenuBar = ({ editor, editingDraft, titleData, descriptionData, coverData, 
       setLoading(false)
       return
     }
+    deleteUnusedImages();
     const linkTitle = title.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '').toLowerCase();
-    const docID = userData.username + uuidv4().split('-')[0] + '-' + linkTitle;
+    const docID = userData.uid + userData.username + uuidv4().split('-')[0] + '-' + linkTitle;
     const docRef = doc(db, "articles", docID);
     setDoc(docRef, {content: html, title: title, author: userData.uid, date: new Date(), draft: false, description: description, cover: cover, tags: tags, likes: [], popularity: 0}).then (() => {
       if (docID !== editingDraft) {
+        
         deleteDoc(doc(db, "articles", editingDraft));
         navigate('/article/' + docID);
       }
@@ -146,19 +168,21 @@ const MenuBar = ({ editor, editingDraft, titleData, descriptionData, coverData, 
   
 
   useEffect(() => {
-    if (image !== null) {
+    if (image !== null && editingDraft) {
 
       if (image.size > 1000000) {
         alert('image must be less than 1mb');
         return;
       }
       
-      const imageREF = ref(storage, 'images/' + uuidv4());
+      const folder = editingDraft + '/'; 
+      const rand = uuidv4();
+      const imageREF = ref(storage, 'images/' + folder + rand);
       
       uploadBytes(imageREF, image).then (() => {
         
         getDownloadURL(imageREF).then((url) => {
-          addImage(url);
+          addImage(url, rand);
 
         }).catch(error => {
           console.log(error);
@@ -181,7 +205,7 @@ const MenuBar = ({ editor, editingDraft, titleData, descriptionData, coverData, 
       return;
     }
     const userData = JSON.parse(localStorage.getItem('user'));
-    const coverRef = ref(storage, 'cover/' + uuidv4() +  userData.username + userData.articles.length);
+    const coverRef = ref(storage, 'cover/' +  userData.username + userData.uid + userData.articles.length + editingDraft);
     uploadBytes(coverRef, image).then (() => {
       
       getDownloadURL(coverRef).then((url) => {
@@ -315,7 +339,7 @@ const MenuBar = ({ editor, editingDraft, titleData, descriptionData, coverData, 
             Set link
           </button> */}
         <input id="addImage" type="file" onChange={(event) => setAddImage(event.target.files[0])} hidden accept='image/*'/>
-        <label htmlFor="addImage" className="btn">Add Image</label>
+        {editingDraft && <label htmlFor="addImage" className="btn">Add Image</label>}
         <hr className="w-full h-1"/>
         
         {editingDraft ? 

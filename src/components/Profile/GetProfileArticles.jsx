@@ -1,7 +1,9 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { db } from '../../firebase/firebase';
-import { collection, getDocs, query, where, orderBy, deleteDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, query, where, orderBy, deleteDoc, doc, } from 'firebase/firestore';
+import { deleteObject, ref, listAll } from 'firebase/storage';
+import { storage } from '../../firebase/firebase';
 import { Link } from 'react-router-dom';
 import Loading from '../Loading';
 import SuggestedPost from '../SuggestedPost';
@@ -15,13 +17,24 @@ const GetProfileArticles = ({user, draft}) => {
     
 
     function handleDelete(id) {
+        const folder = 'images/' + id + '/';
         setLoading(true)
         setArticles(prevArticles => {
             const filteredArticles = prevArticles?.docs?.filter((doc) => doc.id !== id);
             return { docs: filteredArticles };
         });
         deleteDoc(doc(db, "articles", id)).then(() => {
-            setLoading(false)
+            listAll(ref(storage, folder)).then((res) => {
+                res.items.forEach((itemRef) => {
+                    deleteObject(ref(storage, folder + itemRef.name)).then(() => {
+                        console.log('image deleted');
+                    }).catch((error) => {
+                        console.log(error);
+                    }).finally(() => {
+                        setLoading(false)
+                    });
+                });
+            })
         }).catch(error => {
             console.log(error);
         });

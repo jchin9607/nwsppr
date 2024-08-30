@@ -85,7 +85,7 @@ const Article = ({loggedIn}) => {
       <div className="text-lg mt-[30px] md:text-xl">{cachedData.description}</div>
       </div>
 
-      <img src={cachedData.cover || 'https://images.unsplash.com/photo-1719937206168-f4c829152b91?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'} alt=""
+      <img src={cachedData.cover || 'https://images.unsplash.com/photo-1719937206168-f4c829152b91?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'} alt="Cover of Article"
       className='prose prose-sm sm:prose lg:prose-lg w-full h-full object-cover mt-[30px]'
       />
       <div className="prose prose-sm sm:prose lg:prose-lg w-full my-[30px] h-[100px]">
