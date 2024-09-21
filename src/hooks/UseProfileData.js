@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { doc, getDoc } from 'firebase/firestore'; 
-import { db } from '../firebase/firebase';
+import { useState, useEffect } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase/firebase";
 
 const UseProfileData = (user) => {
   const cachedProfileData = JSON.parse(localStorage.getItem(user));
@@ -11,33 +11,27 @@ const UseProfileData = (user) => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        
         if (profileData !== null) {
-          
-          if (JSON.parse(localStorage.getItem('user')).uid === user) {
-           
+          if (JSON.parse(localStorage.getItem("user")).uid === user) {
             setProfileData(JSON.parse(localStorage.getItem("user")));
-            
-          }
-          else {
-            
+          } else {
             setProfileData(cachedProfileData);
           }
           return;
         }
-        
-        const docRef = doc(db, 'users', user);
+
+        const docRef = doc(db, "users", user);
         const docSnap = await getDoc(docRef);
-        
+
         if (docSnap.exists()) {
           setProfileData(docSnap.data());
           const data = {
             ...docSnap.data(),
-            email: "haha you thought this was an email"
-          }
+            email: "haha you thought this was an email",
+          };
           localStorage.setItem(user, JSON.stringify(data));
         } else {
-          setError('Deleted User');
+          setError("Deleted User");
         }
       } catch (err) {
         setError(`Error getting document: ${err.message}`);
@@ -47,9 +41,10 @@ const UseProfileData = (user) => {
     };
 
     fetchProfile();
+    console.log("fetching profile data", user);
   }, [user]);
 
   return { profileData, loading, error };
 };
 
-export {UseProfileData};
+export { UseProfileData };

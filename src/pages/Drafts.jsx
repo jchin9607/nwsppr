@@ -1,46 +1,39 @@
-import React from 'react'
-import { useState, useEffect } from 'react';
-import GetProfileArticles from '../components/Profile/GetProfileArticles.jsx';
-import { Helmet } from 'react-helmet';
-const Drafts = () => {
-    const [loading, setLoading] = useState(true);
-    let userData = JSON.parse(localStorage.getItem('user'))
-    // const [articles, setArticles] = useState([]);
-    
+import React from "react";
+import { useState, useEffect } from "react";
+import GetProfileArticles from "../components/Profile/GetProfileArticles.jsx";
+import { Helmet } from "react-helmet";
 
-    useEffect(() => {
-      if (!userData) {
-          console.log('no user found')
-          window.location.replace('/');
-      }
-      else {
-          // const q = query(collection(db, "articles"), where("author", "==", userData.uid), where("draft", "==", true));
-          // getDocs(q).then((querySnapshot) => {
-          //   setArticles(querySnapshot);
-            
-          // }).catch(error => {
-          //   console.log(error);
-          // });
-          
-          
-          setLoading(false);
-      }
-  }, [])
-  
-  
+const Drafts = ({ userId }) => {
+  const [loading, setLoading] = useState(true);
+  const userData = userId;
+  // const [articles, setArticles] = useState([]);
 
+  useEffect(() => {
+    if (!userData) {
+      console.log("no user found");
+      window.location.replace("/");
+    } else {
+      // const q = query(collection(db, "articles"), where("author", "==", userData.uid), where("draft", "==", true));
+      // getDocs(q).then((querySnapshot) => {
+      //   setArticles(querySnapshot);
+
+      // }).catch(error => {
+      //   console.log(error);
+      // });
+      setLoading(false);
+    }
+  }, []);
 
   if (loading) {
-    return <p>Loading...</p>
+    return <p>Loading...</p>;
   }
   return (
-    
     <div className="w-full px-[15%] min-h-screen">
       <Helmet>
         <title>Drafts | writeup.</title>
       </Helmet>
-        <h1 className='text-7xl font-bold my-10'>Your Drafts</h1>
-        {/* {!loading && articles && articles.docs && articles.docs.map((doc) => {
+      <h1 className="text-7xl font-bold my-10">Your Drafts</h1>
+      {/* {!loading && articles && articles.docs && articles.docs.map((doc) => {
               return (
               <Link to={'/write/' + doc.id}>
                 <div className='w-full  h-[250px] flex cursor-pointer'>
@@ -61,10 +54,10 @@ const Drafts = () => {
               </Link>
               )
             })} */}
-        
-        <GetProfileArticles user={userData.uid} draft={true} />
-    </div>
-  )
-}
 
-export default Drafts
+      <GetProfileArticles user={userData} draft={true} />
+    </div>
+  );
+};
+
+export default Drafts;

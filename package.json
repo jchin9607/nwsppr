@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.56.2",
+    "@tanstack/react-query-devtools": "^5.56.2",
     "@tiptap/extension-image": "^2.5.4",
     "@tiptap/extension-link": "^2.5.9",
     "@tiptap/extension-youtube": "^2.5.9",
