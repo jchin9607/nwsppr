@@ -26,6 +26,8 @@ import Youtube from "@tiptap/extension-youtube";
 import DOMPurify from "dompurify";
 import ImageResize from "tiptap-extension-resize-image";
 
+import UseModerate from "../../hooks/UseModerate.js";
+
 // import { content } from '../content.js'
 
 const MenuBar = ({
@@ -176,54 +178,72 @@ const MenuBar = ({
   }
 
   function handlePublish() {
-    const userData = userDataState;
-    if (!userData) {
-      console.log("no user found");
-      return;
-    }
+    UseModerate(title + " " + description + " " + editor.getText())
+      .then((response) => {
+        if (response) {
+          alert(
+            "Your Article may contain nsfw content. Please review your article before publishing. If not, report this bug: https://discord.gg/xXaXAjEN47"
+          );
+          return;
+        } else {
+          const userData = userDataState;
+          if (!userData) {
+            console.log("no user found");
+            return;
+          }
 
-    setLoading(true);
-    const html = DOMPurify.sanitize(editor.getHTML());
-    if (
-      !title ||
-      !description ||
-      !cover ||
-      html.length < 250 ||
-      description.length > 1000
-    ) {
-      alert(
-        "Please fill in the title, description, and/or cover image. Content must be at least 250 characters long and description must be less than 1000 characters"
-      );
-      setLoading(false);
-      return;
-    }
-    deleteUnusedImages();
-    const linkTitle = title
-      .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, "")
-      .toLowerCase();
-    const docID =
-      userId + userData.username + uuidv4().split("-")[0] + "-" + linkTitle;
-    const docRef = doc(db, "articles", docID);
-    setDoc(docRef, {
-      content: html,
-      title: title,
-      author: userId,
-      date: new Date(),
-      draft: false,
-      description: description,
-      cover: cover,
-      tags: tags,
-      likes: [],
-      popularity: 0,
-    })
-      .then(() => {
-        if (docID !== editingDraft) {
-          deleteDoc(doc(db, "articles", editingDraft));
-          navigate("/article/" + docID);
-        } else navigate("/article/" + docID);
+          setLoading(true);
+          const html = DOMPurify.sanitize(editor.getHTML());
+          if (
+            !title ||
+            !description ||
+            !cover ||
+            html.length < 250 ||
+            description.length > 1000
+          ) {
+            alert(
+              "Please fill in the title, description, and/or cover image. Content must be at least 250 characters long and description must be less than 1000 characters"
+            );
+            setLoading(false);
+            return;
+          }
+          deleteUnusedImages();
+          const linkTitle = title
+            .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, "")
+            .toLowerCase();
+          const docID =
+            userId +
+            userData.username +
+            uuidv4().split("-")[0] +
+            "-" +
+            linkTitle;
+          const docRef = doc(db, "articles", docID);
+          setDoc(docRef, {
+            content: html,
+            title: title,
+            author: userId,
+            date: new Date(),
+            draft: false,
+            description: description,
+            cover: cover,
+            tags: tags,
+            likes: [],
+            popularity: 0,
+          })
+            .then(() => {
+              if (docID !== editingDraft) {
+                deleteDoc(doc(db, "articles", editingDraft));
+                navigate("/article/" + docID);
+              } else navigate("/article/" + docID);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
       })
       .catch((error) => {
-        console.log(error);
+        alert(error);
+        return;
       });
   }
 
