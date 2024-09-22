@@ -6,13 +6,13 @@ const OurTeam = () => {
   const teamObject = [
     {
       image:
-        "https://ik.imagekit.io/64c35uuyg/b4stembio/lucas.png?updatedAt=1711050748800",
+        "https://ik.imagekit.io/64c35uuyg/personalportfolio/IMG_1079.JPG?updatedAt=1712264407870",
       name: "Lucas",
       about: "Web Dev",
     },
     {
       image:
-        "https://ik.imagekit.io/64c35uuyg/b4stembio/ian.jpg?updatedAt=1711050748800",
+        "https://media.discordapp.net/attachments/1270094209411448936/1287137439445549167/image.jpg?ex=66f073a7&is=66ef2227&hm=b947e93ac931ab0549c8fd3231219e70d0c3b392c390ba895fb1b433f2dfe0c4&=&format=webp&width=507&height=676",
       name: "Ian",
       about: "Social Media Manager",
     },
