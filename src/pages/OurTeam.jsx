@@ -22,6 +22,12 @@ const OurTeam = () => {
       name: "Dhruva",
       about: "DevOps",
     },
+    {
+      image:
+        "https://ik.imagekit.io/64c35uuyg/b4stembio/1714620214604.png?updatedAt=1727301586788",
+      name: "Julian",
+      about: "Social Media",
+    },
   ];
 
   return (
@@ -37,7 +43,7 @@ const OurTeam = () => {
               <img
                 src={member.image}
                 alt={member.name}
-                className=" w-full h-[450px] object-cover"
+                className=" w-full h-[450px] object-cover bg-gray-400 rounded-md hover:scale-105 transition-all drop-shadow-sm cursor-pointer"
               />
               <h1 className="text-center text-2xl font-bold">{member.name}</h1>
               <p className="text-md text-start text-gray-500">{member.about}</p>

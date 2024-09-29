@@ -92,37 +92,31 @@ const App = () => {
         <div>
           <Routes>
             <Route
-              path="/"
-              element={
-                user ? <Home userId={user.uid} /> : <Navigate to="/auth" />
-              }
+              path="/home"
+              element={user ? <Home userId={user.uid} /> : <Navigate to="/" />}
             />
             <Route
-              path="/auth"
-              element={!user ? <Auth /> : <Navigate to="/" />}
+              path="/"
+              element={!user ? <Auth /> : <Navigate to="/home" />}
             />
             <Route
               path="/p/:user"
               element={
-                user ? <Profile userId={user.uid} /> : <Navigate to="/auth" />
+                user ? <Profile userId={user.uid} /> : <Navigate to="/" />
               }
             />
             <Route
               path="/write/"
-              element={
-                user ? <Write userId={user.uid} /> : <Navigate to="/auth" />
-              }
+              element={user ? <Write userId={user.uid} /> : <Navigate to="/" />}
             />
             <Route
               path="/write/:document"
-              element={
-                user ? <Write userId={user.uid} /> : <Navigate to="/auth" />
-              }
+              element={user ? <Write userId={user.uid} /> : <Navigate to="/" />}
             />
             <Route
               path="/drafts"
               element={
-                user ? <Drafts userId={user.uid} /> : <Navigate to="/auth" />
+                user ? <Drafts userId={user.uid} /> : <Navigate to="/" />
               }
             />
             <Route
@@ -131,14 +125,14 @@ const App = () => {
             />
             <Route
               path="/search/:type/:value"
-              element={user ? <Search /> : <Navigate to="/auth" />}
+              element={user ? <Search /> : <Navigate to="/" />}
             />
             <Route path="/404" element={<Fourohfour />} />
             <Route path="/team" element={<OurTeam />} />
             <Route
               path="/settings"
               element={
-                user ? <Settings userId={user.uid} /> : <Navigate to="/auth" />
+                user ? <Settings userId={user.uid} /> : <Navigate to="/" />
               }
             />
             <Route path="*" element={<Navigate to="/404" />} />

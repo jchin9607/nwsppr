@@ -111,6 +111,7 @@ const Home = ({ userId }) => {
   }
 
   if (loading) {
+    // might wanna delete this
     return <LoadingScreen />;
   }
 
