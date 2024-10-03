@@ -21,11 +21,13 @@ const Footer = () => {
         </div>
         <div className="flex w-full h-full justify-center items-center gap-10 text-xs flex-col mb-5 sm:flex-row">
           <Link to="/team">Our Team</Link>
-          <a href="">Donate</a>
+          <a href="https://hcb.hackclub.com/donations/start/writeup">Donate</a>
           <a href="https://forms.gle/X9bYG5JYJnMMrLy56" target="_blank">
             Join
           </a>
-          <a href="">Contact Us</a>
+          <a href="https://discord.gg/xXaXAjEN47" target="_blank">
+            Contact Us
+          </a>
           <a href="">Terms of Service</a>
           <a href="">Privacy Policy</a>
         </div>
