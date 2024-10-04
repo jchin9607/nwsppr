@@ -9,6 +9,8 @@ import {
   orderBy,
   deleteDoc,
   doc,
+  limit,
+  startAfter,
 } from "firebase/firestore";
 import { deleteObject, ref, listAll } from "firebase/storage";
 import { storage } from "../../firebase/firebase";
@@ -60,11 +62,12 @@ const GetProfileArticles = ({ user, draft, userId }) => {
       collection(db, "articles"),
       where("author", "==", user),
       where("draft", "==", draft),
-      orderBy("date", "desc")
+      orderBy("date", "desc"),
+      limit(10)
     );
     getDocs(q)
       .then((querySnapshot) => {
-        setArticles(querySnapshot);
+        setArticles({ docs: [...querySnapshot.docs] });
       })
       .catch((error) => {
         console.log(error);
@@ -72,6 +75,26 @@ const GetProfileArticles = ({ user, draft, userId }) => {
 
     setLoading(false);
   }, [location.pathname]);
+
+  function loadMore() {
+    const q = query(
+      collection(db, "articles"),
+      where("author", "==", user),
+      where("draft", "==", draft),
+      orderBy("date", "desc"),
+      startAfter(articles.docs[articles.docs.length - 1]),
+      limit(10)
+    );
+    getDocs(q)
+      .then((querySnapshot) => {
+        console.log({ docs: [...articles.docs, ...querySnapshot.docs] });
+        setArticles({ docs: [...articles.docs, ...querySnapshot.docs] });
+        setPage(page + 10);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   if (loading) {
     return <Loading />;
@@ -92,28 +115,9 @@ const GetProfileArticles = ({ user, draft, userId }) => {
       )}
       {!loading &&
         articles &&
-        articles?.docs?.slice(0, page).map((article) => {
+        articles?.docs?.map((article) => {
           return (
             <>
-              {/* <Link to={draft ? '/write/' + article.id : '/article/' + article.id}>
-            <div key={article.id}>
-                <div className='w-full  min-h-[250px] flex cursor-pointer'>
-                <div className='w-2/3 flex flex-col justify-between items-start py-6'>
-                    
-                    <h1 className='text-3xl font-bold'>{article.data().title || 'Untitled'}</h1>
-                    <p className='text-md color-gray'>{article.data().description || 'No Description'}</p>
-                    <p>{article.data().date.toDate().toLocaleDateString("en-us", { year: 'numeric', month: 'long', day: 'numeric' })}</p>
-                </div>
-                <div className='w-1/3 flex items-center justify-end'>
-                <img src={article.data().cover || 'https://images.unsplash.com/photo-1719937206168-f4c829152b91?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'} alt=""
-                className='w-[250px] h-[150px] object-cover'
-                />
-                </div>
-                    
-                </div>
-            </div>
-            </Link> */}
-
               <SuggestedPost
                 article={article.id}
                 articleData={article.data()}
@@ -134,9 +138,9 @@ const GetProfileArticles = ({ user, draft, userId }) => {
           );
         })}
 
-      {page < articles?.docs?.length && (
+      {page <= articles?.docs?.length && (
         <div
-          onClick={() => setPage(page + 10)}
+          onClick={() => loadMore()}
           className="btn cursor-pointer my-10 max-w-[8rem]"
         >
           Load More

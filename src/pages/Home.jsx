@@ -1,6 +1,13 @@
 import React from "react";
 import SuggestedPost from "../components/SuggestedPost.jsx";
-import { collection, orderBy, query, where, limit } from "firebase/firestore";
+import {
+  collection,
+  orderBy,
+  query,
+  where,
+  limit,
+  startAfter,
+} from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { useState, useEffect } from "react";
 import { getDocs } from "firebase/firestore";
@@ -61,6 +68,35 @@ const Home = ({ userId }) => {
     setLoading(false);
   }, []);
 
+  // function loadMore() {
+  //   const q = query(
+  //     collection(db, "articles"),
+
+  //     where("draft", "==", false),
+  //     where("date", ">", sevenDaysAgo),
+  //     orderBy("date", "desc"),
+  //     startAfter(articles.docs[articles.docs.length - 1]),
+  //     limit(30)
+  //   );
+
+  //   getDocs(q)
+  //     .then((querySnapshot) => {
+  //       setArticles((prevArticles) => ({
+  //         docs: [
+  //           ...prevArticles.docs,
+  //           ...querySnapshot.docs.map((doc) => ({
+  //             ...doc.data(),
+  //             id: doc.id,
+  //           })),
+  //         ],
+  //       }));
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //       console.log(articles);
+  //     });
+  // }
+
   function handleSort(bool) {
     setSort(bool);
   }
@@ -110,10 +146,9 @@ const Home = ({ userId }) => {
     }
   }
 
-  if (loading) {
-    // might wanna delete this
-    return <LoadingScreen />;
-  }
+  // if (loading) {
+  //   return <LoadingScreen />;
+  // }
 
   return (
     <div className="px-[5%] min-h-screen">
@@ -274,7 +309,7 @@ const Home = ({ userId }) => {
                 );
               })}
 
-          {!loading && !articles && (
+          {!articles && (
             <>
               <Loading />
               <Loading />
@@ -282,7 +317,12 @@ const Home = ({ userId }) => {
             </>
           )}
 
-          <button onClick={() => setPage(page + 10)} className="btn my-10">
+          <button
+            onClick={() => {
+              setPage(page + 10);
+            }}
+            className="btn my-10"
+          >
             Load More
           </button>
         </div>
