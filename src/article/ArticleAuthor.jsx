@@ -7,11 +7,20 @@ const ArticleAuthor = ({ useruid, inArticle, inComment }) => {
   const { data, isLoading: loading, error } = UseProfileDataQuery(useruid);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center gap-6">
+        <div className="avatar not-prose">
+          <div className="w-14 rounded-full bg-gray-400">
+            <div class="skeleton h-14 w-14 shrink-0 rounded-full"></div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    );
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <div>User Does Not Exist: {error}</div>;
   }
 
   const profileData = data.data();
