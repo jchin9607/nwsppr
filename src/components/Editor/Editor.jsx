@@ -228,7 +228,7 @@ const MenuBar = ({
             cover: cover,
             tags: tags,
             likes: [],
-            popularity: 0,
+            likeCount: 0,
           })
             .then(() => {
               if (docID !== editingDraft) {
