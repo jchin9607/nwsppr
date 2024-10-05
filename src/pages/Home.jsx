@@ -264,8 +264,8 @@ const Home = ({ userId }) => {
               .sort((a, b) => b.date.seconds - a.date.seconds)
               .sort(
                 (a, b) =>
-                  UsePopularityAlgorithm(b.likes.length, b.date.seconds) -
-                  UsePopularityAlgorithm(a.likes.length, a.date.seconds)
+                  UsePopularityAlgorithm(b.likeCount, b.date.seconds) -
+                  UsePopularityAlgorithm(a.likeCount, a.date.seconds)
               )
               .filter(
                 (doc) =>

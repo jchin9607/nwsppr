@@ -1,12 +1,12 @@
 import React from "react";
 import { useState } from "react";
-import { updateDoc, doc, arrayUnion } from "firebase/firestore";
+import { updateDoc, doc, arrayUnion, increment } from "firebase/firestore";
 import { db } from "../firebase/firebase.js";
 import Comment from "./Comment.jsx";
 import Flag from "./Flag.jsx";
 
 const Likes = ({ article, articleId, notClickable, userId }) => {
-  const [likes, setLikes] = useState(article.likes.length);
+  const [likes, setLikes] = useState(article.likeCount || 0);
   const [liked, setLiked] = useState(article.likes.includes(userId));
   function handleLike(increment, liked) {
     setLikes(parseInt(likes) + parseInt(increment));
@@ -26,6 +26,7 @@ const Likes = ({ article, articleId, notClickable, userId }) => {
     if (liked) {
       updateDoc(docRef, {
         likes: article.likes.filter((author) => author !== userId),
+        likeCount: increment(-1),
       }).then(() => {
         handleLike(-1, false);
         localStorage.setItem(
@@ -33,12 +34,14 @@ const Likes = ({ article, articleId, notClickable, userId }) => {
           JSON.stringify({
             ...article,
             likes: article.likes.filter((author) => author !== userId),
+            likeCount: article.likeCount - 1,
           })
         );
         if (articleListItem) {
           articleListItem.likes = articleListItem.likes.filter(
             (author) => author !== userId
           );
+          articleListItem.likeCount = articleListItem.likeCount - 1;
           articleList[index] = articleListItem;
           localStorage.setItem(
             "articlesList",
@@ -49,6 +52,7 @@ const Likes = ({ article, articleId, notClickable, userId }) => {
     } else {
       updateDoc(docRef, {
         likes: arrayUnion(userId),
+        likeCount: increment(1),
       }).then(() => {
         handleLike(1, true);
         const likeCount = JSON.parse(localStorage.getItem(articleId));
@@ -57,10 +61,12 @@ const Likes = ({ article, articleId, notClickable, userId }) => {
           JSON.stringify({
             ...article,
             likes: likeCount.likes.concat(userId),
+            likeCount: likeCount.likeCount + 1,
           })
         );
         if (articleListItem) {
           articleListItem.likes = articleListItem.likes.concat(userId);
+          articleListItem.likeCount = articleListItem.likeCount + 1;
           articleList[index] = articleListItem;
           localStorage.setItem(
             "articlesList",

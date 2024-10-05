@@ -7,17 +7,17 @@ const Auth = () => {
       <div className="flex flex-col gap-6 h-full w-full half:w-[45%] ">
         <div>
           <h3 className="text-2xl font-bold hidden half:block">writeup.</h3>
-          <h1 className="text-4xl font-bold sm:text-7xl">By Students,</h1>
-          <h1 className="text-4xl font-bold sm:text-7xl">For Students</h1>
+          <h1 className="text-4xl font-bold sm:text-7xl">For Students,</h1>
+          <h1 className="text-4xl font-bold sm:text-7xl">By Students</h1>
         </div>
         <div>
           <p>
-            🌎 Join a free, student-run platform to share your thoughts and
-            ideas.
+            🌎 Join a free, student-run 501(c)(3) platform to share your
+            thoughts and ideas.
           </p>
           <p>
-            Write and share articles with students worldwide and connect with a
-            global community.
+            📝 Write and share articles with students worldwide and connect with
+            a global community.
           </p>
         </div>
 
