@@ -1,4 +1,4 @@
-import React from "react";
+berimport React from "react";
 
 const OurTeam = () => {
   window.scrollTo(0, 0);
@@ -44,7 +44,7 @@ const OurTeam = () => {
               className="w-[350px] h-auto flex flex-col gap-2 items-start"
               key={index}
             >
-              <a href={link}><img
+              <a href={member.link}><img
                 src={member.image}
                 alt={member.name}
                 className=" w-full h-[450px] object-cover bg-gray-400 rounded-md hover:scale-105 transition-all drop-shadow-sm cursor-pointer"
