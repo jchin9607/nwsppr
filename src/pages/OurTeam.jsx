@@ -1,4 +1,4 @@
-berimport React from "react";
+import React from "react";
 
 const OurTeam = () => {
   window.scrollTo(0, 0);
