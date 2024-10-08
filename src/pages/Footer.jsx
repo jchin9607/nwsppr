@@ -17,7 +17,7 @@ const Footer = () => {
 
         <div className="flex flex-col justify-end h-full">
           <p className="text-3xl"></p>
-          <p className="text-[8vw]">©writeup.</p>
+          <p onClick={window.scroll(0,0)} className="text-[8vw]">©writeup.</p>
         </div>
         <div className="flex w-full h-full justify-center items-center gap-10 text-xs flex-col mb-5 sm:flex-row">
           <Link to="/team">Our Team</Link>
