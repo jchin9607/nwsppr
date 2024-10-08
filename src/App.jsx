@@ -16,6 +16,7 @@ import Search from "./pages/Search.jsx";
 import Fourohfour from "./pages/Fourohfour.jsx";
 import Footer from "./pages/Footer.jsx";
 import OurTeam from "./pages/OurTeam.jsx";
+import TOS from "./pages/Tos.jsx";
 import Settings from "./pages/Settings.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -129,6 +130,7 @@ const App = () => {
             />
             <Route path="/404" element={<Fourohfour />} />
             <Route path="/team" element={<OurTeam />} />
+            <Route path="/TOS" element={<Tos />} />
             <Route
               path="/settings"
               element={
