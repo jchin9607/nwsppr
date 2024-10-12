@@ -19,6 +19,8 @@ import OurTeam from "./pages/OurTeam.jsx";
 import Settings from "./pages/Settings.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import TOS from "./pages/TOS.jsx";
+import Privacy from "./pages/Privacy.jsx";
 
 const App = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -128,7 +130,8 @@ const App = () => {
               element={user ? <Search /> : <Navigate to="/" />}
             />
             <Route path="/404" element={<Fourohfour />} />
-            <Route path="/team" element={<OurTeam />} />
+            <Route path="/tos" element={<TOS />} />
+            <Route path="/privacy" element={<Privacy />} />
             <Route
               path="/settings"
               element={

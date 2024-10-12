@@ -17,19 +17,28 @@ const Footer = () => {
 
         <div className="flex flex-col justify-end h-full">
           <p className="text-3xl"></p>
-          <p onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="text-[8vw] cursor-pointer">©writeup.</p>
+          <p
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="text-[8vw] cursor-pointer"
+          >
+            ©writeup.
+          </p>
         </div>
         <div className="flex w-full h-full justify-center items-center gap-10 text-xs flex-col mb-5 sm:flex-row">
-          <Link to="/team">Our Team</Link>
-          <a href="https://hcb.hackclub.com/donations/start/writeup">Donate</a>
+          <a
+            href="https://hcb.hackclub.com/donations/start/writeup"
+            target="_blank"
+          >
+            Donate
+          </a>
           <a href="https://forms.gle/X9bYG5JYJnMMrLy56" target="_blank">
             Join
           </a>
           <a href="https://discord.gg/xXaXAjEN47" target="_blank">
             Contact Us
           </a>
-          <a href="">Terms of Service</a>
-          <a href="">Privacy Policy</a>
+          <Link to="/tos">Terms of Service</Link>
+          <Link to="/privacy">Privacy Policy</Link>
         </div>
       </div>
     </>
