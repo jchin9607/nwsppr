@@ -68,35 +68,6 @@ const Home = ({ userId }) => {
     setLoading(false);
   }, []);
 
-  // function loadMore() {
-  //   const q = query(
-  //     collection(db, "articles"),
-
-  //     where("draft", "==", false),
-  //     where("date", ">", sevenDaysAgo),
-  //     orderBy("date", "desc"),
-  //     startAfter(articles.docs[articles.docs.length - 1]),
-  //     limit(30)
-  //   );
-
-  //   getDocs(q)
-  //     .then((querySnapshot) => {
-  //       setArticles((prevArticles) => ({
-  //         docs: [
-  //           ...prevArticles.docs,
-  //           ...querySnapshot.docs.map((doc) => ({
-  //             ...doc.data(),
-  //             id: doc.id,
-  //           })),
-  //         ],
-  //       }));
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //       console.log(articles);
-  //     });
-  // }
-
   function handleSort(bool) {
     setSort(bool);
   }
@@ -230,14 +201,6 @@ const Home = ({ userId }) => {
           <div></div>
         </div>
         <div className="w-full lg:w-7/12">
-          {/* <SuggestedPost/>
-          <SuggestedPost/>
-          <SuggestedPost/>
-          <SuggestedPost/>
-          <SuggestedPost/>
-          <SuggestedPost/>
-          <SuggestedPost/>
-          <SuggestedPost/> */}
           <h1 className="text-6xl font-bold">Trending</h1>
           <div className="dropdown dropdown-hover">
             <div tabIndex={0} role="button" className="btn m-1">
@@ -309,13 +272,14 @@ const Home = ({ userId }) => {
                 );
               })}
 
-          {!articles && (
-            <>
-              <Loading />
-              <Loading />
-              <Loading />
-            </>
-          )}
+          {!articles ||
+            (loading && (
+              <>
+                <Loading />
+                <Loading />
+                <Loading />
+              </>
+            ))}
 
           <button
             onClick={() => {

@@ -1,13 +1,21 @@
 import React from "react";
 import { useState } from "react";
-import { updateDoc, doc, arrayUnion, increment } from "firebase/firestore";
+import {
+  updateDoc,
+  doc,
+  arrayUnion,
+  increment,
+  arrayRemove,
+} from "firebase/firestore";
 import { db } from "../firebase/firebase.js";
 import Comment from "./Comment.jsx";
 import Flag from "./Flag.jsx";
+import ArticleAuthor from "./ArticleAuthor.jsx";
 
 const Likes = ({ article, articleId, notClickable, userId }) => {
   const [likes, setLikes] = useState(article.likeCount || 0);
   const [liked, setLiked] = useState(article.likes.includes(userId));
+  const [viewLikes, setViewLikes] = useState(false);
   function handleLike(increment, liked) {
     setLikes(parseInt(likes) + parseInt(increment));
     setLiked(liked);
@@ -25,7 +33,7 @@ const Likes = ({ article, articleId, notClickable, userId }) => {
 
     if (liked) {
       updateDoc(docRef, {
-        likes: article.likes.filter((author) => author !== userId),
+        likes: arrayRemove(userId),
         likeCount: increment(-1),
       }).then(() => {
         handleLike(-1, false);
@@ -34,7 +42,8 @@ const Likes = ({ article, articleId, notClickable, userId }) => {
           JSON.stringify({
             ...article,
             likes: article.likes.filter((author) => author !== userId),
-            likeCount: article.likeCount - 1,
+            likeCount:
+              JSON.parse(localStorage.getItem(articleId)).likeCount - 1,
           })
         );
         if (articleListItem) {
@@ -79,7 +88,7 @@ const Likes = ({ article, articleId, notClickable, userId }) => {
   return (
     <div className="h-[50px] items-center w-full">
       <div className="rating gap-1 flex w-full h-full items-center">
-        {liked ? (
+        {!notClickable && liked && (
           <>
             <input
               type="radio"
@@ -89,7 +98,8 @@ const Likes = ({ article, articleId, notClickable, userId }) => {
               aria-label="Unlike"
             />
           </>
-        ) : (
+        )}
+        {!notClickable && !liked && (
           <input
             type="radio"
             name="rating-3"
@@ -98,7 +108,70 @@ const Likes = ({ article, articleId, notClickable, userId }) => {
             aria-label="Like"
           />
         )}
-        <p>{likes}</p>
+        {notClickable &&
+          JSON.parse(localStorage.getItem(articleId)).likes.includes(
+            userId
+          ) && (
+            <>
+              <input
+                type="radio"
+                name="rating-3"
+                className="mask mask-heart bg-red-400"
+                onClick={handleLikes}
+                aria-label="Unlike"
+              />
+            </>
+          )}
+        {notClickable &&
+          !JSON.parse(localStorage.getItem(articleId)).likes.includes(
+            userId
+          ) && (
+            <input
+              type="radio"
+              name="rating-3"
+              className="mask mask-heart bg-gray-400"
+              onClick={handleLikes}
+              aria-label="Like"
+            />
+          )}
+        <p>
+          {!notClickable ? (
+            <span
+              onClick={() => {
+                document.getElementById("viewLikes").showModal();
+                setViewLikes(true);
+              }}
+              className="cursor-pointer underline"
+            >
+              {likes}
+            </span>
+          ) : (
+            JSON.parse(localStorage.getItem(articleId)).likeCount
+          )}
+        </p>
+
+        <dialog id="viewLikes" className="modal">
+          <div className="modal-box">
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                ✕
+              </button>
+            </form>
+            <h3 className="font-bold text-lg">Likes</h3>
+            <p className="py-4 max-h-[300px] overflow-y-auto">
+              {viewLikes &&
+                article.likes.map((author) => (
+                  <ArticleAuthor
+                    useruid={author}
+                    key={author}
+                    inArticle={false}
+                    inComment={false}
+                  />
+                ))}
+            </p>
+          </div>
+        </dialog>
         <Comment
           comments={article.comments}
           articleId={articleId}

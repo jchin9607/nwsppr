@@ -7,9 +7,11 @@ import { db } from "../../firebase/firebase.js";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase/firebase.js";
 import { collection, query, where, getDocs } from "firebase/firestore";
-const Edit = ({ userURL, data }) => {
+import ArticleAuthor from "../../article/ArticleAuthor.jsx";
+const Edit = ({ userURL, data, inSettings }) => {
   const [user, loading, error] = useAuthState(auth);
   const [isButtonLoading, setIsButtonLoading] = useState(false);
+  const [openModel, setOpenModel] = useState(0);
 
   if (!user || userURL !== user.uid) return null;
 
@@ -161,6 +163,68 @@ const Edit = ({ userURL, data }) => {
 
   return (
     <>
+      {inSettings !== true && (
+        <>
+          <p>
+            <strong
+              className="cursor-pointer underline"
+              onClick={() => {
+                document.getElementById("myFollowers").showModal();
+                setOpenModel(1);
+              }}
+            >
+              {data.followers.length}
+            </strong>{" "}
+            Followers
+          </p>
+          <p>
+            <strong
+              className="cursor-pointer underline"
+              onClick={() => {
+                document.getElementById("myFollowers").showModal();
+                setOpenModel(2);
+              }}
+            >
+              {data.following.length}
+            </strong>{" "}
+            Following
+          </p>
+        </>
+      )}
+
+      <dialog id="myFollowers" className="modal">
+        <div className="modal-box">
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              ✕
+            </button>
+          </form>
+          <h3 className="font-bold text-lg">
+            {openModel === 1 ? "Followers" : "Following"}
+          </h3>
+          <p className="py-4">
+            {openModel === 1 &&
+              data.followers.map((item) => (
+                <ArticleAuthor
+                  useruid={item}
+                  inArticle={false}
+                  inComment={false}
+                  key={item}
+                />
+              ))}
+            {openModel === 2 &&
+              data.following.map((item) => (
+                <ArticleAuthor
+                  useruid={item}
+                  inArticle={false}
+                  inComment={false}
+                  key={item}
+                />
+              ))}
+          </p>
+        </div>
+      </dialog>
       <button onClick={() => document.getElementById("editUser").showModal()}>
         Edit Profile
       </button>
@@ -184,7 +248,7 @@ const Edit = ({ userURL, data }) => {
             placeholder="Username"
             className="input input-bordered w-full max-w-xs"
             value={userObject.username
-              .replace(/[`~!@#$%^&*()|+\=?;:'",<>\{\}\[\]\\\/]/gi, "")
+              .replace(/[`~!@#$%^&*()|+\=?;:'",<>\{\}\[\]\\\/\s]/gi, "")
               .toLowerCase()}
             onChange={(e) =>
               setUserObject({ ...userObject, username: e.target.value })

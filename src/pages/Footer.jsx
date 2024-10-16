@@ -31,9 +31,7 @@ const Footer = () => {
           >
             Donate
           </a>
-          <a href="https://forms.gle/X9bYG5JYJnMMrLy56" target="_blank">
-            Join
-          </a>
+          <Link to="/join">Join</Link>
           <a href="https://discord.gg/xXaXAjEN47" target="_blank">
             Contact Us
           </a>

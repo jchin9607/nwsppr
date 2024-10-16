@@ -21,6 +21,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import TOS from "./pages/TOS.jsx";
 import Privacy from "./pages/Privacy.jsx";
+import HomeRework from "./pages/HomeRework.jsx";
+import Join from "./pages/Join.jsx";
 
 const App = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -93,10 +95,10 @@ const App = () => {
         <Navbar loggedIn={user} />
         <div>
           <Routes>
-            <Route
+            {/* <Route
               path="/home"
               element={user ? <Home userId={user.uid} /> : <Navigate to="/" />}
-            />
+            /> old method*/}
             <Route
               path="/"
               element={!user ? <Auth /> : <Navigate to="/home" />}
@@ -132,12 +134,14 @@ const App = () => {
             <Route path="/404" element={<Fourohfour />} />
             <Route path="/tos" element={<TOS />} />
             <Route path="/privacy" element={<Privacy />} />
+            <Route path="/home" element={<HomeRework userId={user?.uid} />} />
             <Route
               path="/settings"
               element={
                 user ? <Settings userId={user.uid} /> : <Navigate to="/" />
               }
             />
+            <Route path="/join" element={<Join />} />
             <Route path="*" element={<Navigate to="/404" />} />
           </Routes>
         </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import { useSignOut } from "react-firebase-hooks/auth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getDoc, doc } from "firebase/firestore";
 import { useState } from "react";
 import { db } from "../firebase/firebase.js";
@@ -22,6 +22,8 @@ const Navbar = ({ loggedIn }) => {
       }
     });
   }
+
+  const navigate = useNavigate();
 
   const [signOut, loading, error] = useSignOut(auth);
 
@@ -86,7 +88,14 @@ const Navbar = ({ loggedIn }) => {
                   </li>
                 </Link>
                 <hr className="w-full h-[1px] my-1" />
-                <p className="cursor-pointer" onClick={() => signOut()}>
+                <p
+                  className="cursor-pointer"
+                  onClick={() => {
+                    signOut();
+                    navigate("/");
+                    window.location.reload();
+                  }}
+                >
                   <li>
                     <a>Sign Out</a>
                   </li>
@@ -128,11 +137,9 @@ const Navbar = ({ loggedIn }) => {
           </p>
         </div>
         <div className="flex gap-4 text-gray-400 underline">
+          <Link to="/join">Opportunities</Link>
           <a href="https://discord.gg/xXaXAjEN47" target="_blank">
             Discord
-          </a>
-          <a href="https://forms.gle/X9bYG5JYJnMMrLy56 " target="_blank">
-            Join the team
           </a>
         </div>
       </div>

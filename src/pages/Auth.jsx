@@ -1,5 +1,6 @@
 import React from "react";
 import Login from "../components/Auth/Login";
+import { Link } from "react-router-dom";
 
 const Auth = () => {
   return (
@@ -23,6 +24,11 @@ const Auth = () => {
 
         <div className="w-[300px]">
           <Login />
+        </div>
+        <div>
+          <Link to="/home" className="link text-blue-600">
+            Continue without logging in
+          </Link>
         </div>
       </div>
       {/* <h3>Share your story with the world</h3> */}

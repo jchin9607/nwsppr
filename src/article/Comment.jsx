@@ -87,7 +87,7 @@ const Comment = ({ comments, articleId, userId }) => {
               ✕
             </button>
           </form>
-          <h3 className="font-bold text-lg">Comments</h3>
+          <p className="font-bold text-lg">Comments</p>
           <div className="max-h-[300px] overflow-y-auto">
             <p className="pb-4 flex flex-col gap-6">
               {allComments.length > 0 && commentSectionOpen ? (

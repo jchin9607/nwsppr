@@ -60,7 +60,7 @@ const Settings = ({ userId }) => {
       <h1>Settings</h1>
       <h2>Edit Profile</h2>
       {data ? (
-        <Edit userURL={userId} data={data} />
+        <Edit userURL={userId} data={data} inSettings={true} />
       ) : (
         <button>Loading...</button>
       )}
