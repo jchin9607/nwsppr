@@ -137,10 +137,7 @@ const Navbar = ({ loggedIn }) => {
           </p>
         </div>
         <div className="flex gap-4 text-gray-400 underline">
-          <Link to="/join">Opportunities</Link>
-          <a href="https://discord.gg/xXaXAjEN47" target="_blank">
-            Discord
-          </a>
+          <Link to="/join">Contribute/Opportunities</Link>
         </div>
       </div>
     </>

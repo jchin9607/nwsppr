@@ -3,9 +3,9 @@ import React from "react";
 const Join = () => {
   window.scrollTo(0, 0);
   return (
-    <div className="w-full h-screen flex justify-start items-start p-[5%] flex-col gap-4">
-      <h1 className="text-7xl font-bold mb-4">Join</h1>
-      <h3 className="text-3xl font-bold">About</h3>
+    <div className="w-full min-h-screen flex justify-start items-start p-[5%] flex-col gap-4 my-[15%] sm:my-[10%] md:my-[0]">
+      <h1 className="text-4xl font-bold mb-4">Join</h1>
+      <h3 className="text-2xl font-bold">About</h3>
       <p>
         writeup. is a community of vibrant writers, and it is our mission to
         make sure all voices can be heard fairly. We are a 501(c)(3) non-profit
@@ -15,7 +15,7 @@ const Join = () => {
         We recently launched this project in October of 2024 and we need help
         applying the final touches!
       </p>
-      <h3 className="text-3xl font-bold mt-4">Available Roles</h3>
+      <h3 className="text-2xl font-bold mt-4">Available Roles</h3>
       <ul className="list-disc">
         <li>Article writers/Bloggers</li>
         <li>Front End Developers</li>

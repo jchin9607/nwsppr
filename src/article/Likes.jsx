@@ -146,7 +146,9 @@ const Likes = ({ article, articleId, notClickable, userId }) => {
               {likes}
             </span>
           ) : (
-            JSON.parse(localStorage.getItem(articleId)).likeCount
+            <span className="underline ">
+              {JSON.parse(localStorage.getItem(articleId)).likeCount}
+            </span>
           )}
         </p>
 
@@ -159,7 +161,7 @@ const Likes = ({ article, articleId, notClickable, userId }) => {
               </button>
             </form>
             <h3 className="font-bold text-lg">Likes</h3>
-            <p className="py-4 max-h-[300px] overflow-y-auto">
+            <p className="py-4 max-h-[300px] overflow-y-auto flex flex-col gap-6">
               {viewLikes &&
                 article.likes.map((author) => (
                   <ArticleAuthor

@@ -149,7 +149,7 @@ const Follow = ({ user, data, userId }) => {
             <h3 className="font-bold text-lg">
               {openedModel === 1 ? "Followers" : "Following"}
             </h3>
-            <p className="py-4 max-h-[300px] overflow-y-auto">
+            <p className="py-4 max-h-[300px] overflow-y-auto flex flex-col gap-6">
               {openedModel === 1 &&
                 data.followers.map((follower) => {
                   return (

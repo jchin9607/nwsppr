@@ -203,7 +203,7 @@ const Edit = ({ userURL, data, inSettings }) => {
           <h3 className="font-bold text-lg">
             {openModel === 1 ? "Followers" : "Following"}
           </h3>
-          <p className="py-4">
+          <p className="py-4 max-h-[300px] overflow-y-auto flex flex-col gap-6">
             {openModel === 1 &&
               data.followers.map((item) => (
                 <ArticleAuthor

@@ -75,7 +75,15 @@ const Comment = ({ comments, articleId, userId }) => {
           ></path>
         </svg>
       </div>
-      {allComments?.length || 0}
+      <span
+        className="cursor-pointer underline"
+        onClick={() => {
+          document.getElementById("commentSection").showModal();
+          setCommentSectionOpen(true);
+        }}
+      >
+        {allComments?.length || 0}
+      </span>
       <dialog id="commentSection" className="modal">
         <div className="modal-box">
           <form method="dialog">
