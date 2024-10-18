@@ -96,6 +96,7 @@ const Likes = ({ article, articleId, notClickable, userId }) => {
               className="mask mask-heart bg-red-400"
               onClick={handleLikes}
               aria-label="Unlike"
+              role="button"
             />
           </>
         )}
@@ -106,6 +107,7 @@ const Likes = ({ article, articleId, notClickable, userId }) => {
             className="mask mask-heart bg-gray-400"
             onClick={handleLikes}
             aria-label="Like"
+            role="button"
           />
         )}
         {notClickable &&
@@ -119,6 +121,7 @@ const Likes = ({ article, articleId, notClickable, userId }) => {
                 className="mask mask-heart bg-red-400"
                 onClick={handleLikes}
                 aria-label="Unlike"
+                role="button"
               />
             </>
           )}
@@ -132,6 +135,7 @@ const Likes = ({ article, articleId, notClickable, userId }) => {
               className="mask mask-heart bg-gray-400"
               onClick={handleLikes}
               aria-label="Like"
+              role="button"
             />
           )}
         <p>
@@ -160,7 +164,7 @@ const Likes = ({ article, articleId, notClickable, userId }) => {
                 ✕
               </button>
             </form>
-            <h3 className="font-bold text-lg">Likes</h3>
+            <p className="font-bold text-lg">Likes</p>
             <p className="py-4 max-h-[300px] overflow-y-auto flex flex-col gap-6">
               {viewLikes &&
                 article.likes.map((author) => (

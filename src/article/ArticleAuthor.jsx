@@ -29,7 +29,7 @@ const ArticleAuthor = ({ useruid, inArticle, inComment }) => {
     <div className="flex items-center gap-6">
       <div className="avatar not-prose">
         <div className="w-14 rounded-full bg-gray-400">
-          <Link to={"/p/" + profileData.uid}>
+          <Link to={"/p/" + profileData.uid} aria-label="to author profile">
             <img
               src={
                 profileData.photoURL ||
@@ -42,7 +42,9 @@ const ArticleAuthor = ({ useruid, inArticle, inComment }) => {
       </div>
       <div>
         {inArticle && "By:"}{" "}
-        <Link to={"/p/" + profileData.uid}>{profileData.fullName}</Link>
+        <Link to={"/p/" + profileData.uid} aria-label="to author profile">
+          {profileData.fullName}
+        </Link>
         <div className="text-sm">{inComment && inComment}</div>
       </div>
     </div>
