@@ -129,7 +129,7 @@ const Navbar = ({ loggedIn }) => {
           </div>
         )}
       </div>
-      <div className="px-[5%] min-h-14 w-full badge-ghost flex flex-col justify-center items-center text-sm">
+{/*       <div className="px-[5%] min-h-14 w-full badge-ghost flex flex-col justify-center items-center text-sm">
         <div>
           <p className="text-center">
             This website is still being developed. Please report bugs and/or
@@ -139,7 +139,7 @@ const Navbar = ({ loggedIn }) => {
         <div className="flex gap-4 text-gray-400 underline">
           <Link to="/join">Contribute/Opportunities</Link>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
