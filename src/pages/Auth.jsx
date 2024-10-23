@@ -13,7 +13,7 @@ const Auth = () => {
         </div>
         <div>
           <p>
-            🌎 Join a free, student-run 501(c)(3) platform to share your
+            🌎 Join a free, student-run platform to share your
             thoughts and ideas.
           </p>
           <p>
