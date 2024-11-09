@@ -40,7 +40,7 @@ const HomeArticleSection = ({ filter, userId, sort, sortAll }) => {
         q = query(
           collection(db, "articles"),
           where("draft", "==", false),
-          where("date", ">", sevenDaysAgo),
+          // where("date", ">", sevenDaysAgo),
           ...(sort
             ? [orderBy("likeCount", "desc")]
             : [orderBy("date", "desc")]),
@@ -54,7 +54,7 @@ const HomeArticleSection = ({ filter, userId, sort, sortAll }) => {
         q = query(
           collection(db, "articles"),
           where("draft", "==", false),
-          where("date", ">", sevenDaysAgo),
+          // where("date", ">", sevenDaysAgo),
           where("tags", "array-contains", filter),
           ...(sort
             ? [orderBy("likeCount", "desc")]
