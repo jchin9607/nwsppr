@@ -45,7 +45,7 @@ const Home = ({ userId }) => {
     collection(db, "articles"),
 
     where("draft", "==", false),
-    where("date", ">", sevenDaysAgo),
+    // where("date", ">", sevenDaysAgo),
     orderBy("date", "desc"),
     limit(30)
     // find a better way to do this
