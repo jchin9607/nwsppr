@@ -17,6 +17,7 @@ import { doc, setDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/firebase.js";
+import { deleteDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import TagsInput from "../TagsInput/TagsInput.jsx";
 
@@ -25,6 +26,7 @@ import Youtube from "@tiptap/extension-youtube";
 import DOMPurify from "dompurify";
 import ImageResize from "tiptap-extension-resize-image";
 
+import UseModerate from "../../hooks/UseModerate.js";
 
 // import { content } from '../content.js'
 
@@ -175,29 +177,74 @@ const MenuBar = ({
       });
   }
 
-  async function handlePublish() {
-    if (!user || !editingDraft || loading) return;
-    const content = DOMPurify.sanitize(editor.getHTML(), { ADD_TAGS: ["iframe"] });
-    setLoading(true);
-    try {
-      const token = await user.getIdToken();
-      const response = await fetch("/api/publish", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ id: editingDraft, title, description, cover, tags, content }),
-      });
-      const result = await response.json().catch(() => null);
-      if (!response.ok || result?.id !== editingDraft) {
-        alert(result?.error ?? "Publishing failed. Your draft is still available.");
+  function handlePublish() {
+    UseModerate(title + " " + description + " " + editor.getText())
+      .then((response) => {
+        if (response) {
+          alert(
+            "Your Article may contain nsfw content. Please review your article before publishing. If not, report this bug: https://discord.gg/xXaXAjEN47"
+          );
+          return;
+        } else {
+          const userData = userDataState;
+          if (!userData) {
+            console.log("no user found");
+            return;
+          }
+
+          setLoading(true);
+          const html = DOMPurify.sanitize(editor.getHTML());
+          if (
+            !title ||
+            !description ||
+            !cover ||
+            html.length < 250 ||
+            description.length > 1000
+          ) {
+            alert(
+              "Please fill in the title, description, and/or cover image. Content must be at least 250 characters long and description must be less than 1000 characters"
+            );
+            setLoading(false);
+            return;
+          }
+          deleteUnusedImages();
+          const linkTitle = title
+            .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, "")
+            .toLowerCase();
+          const docID =
+            userId +
+            userData.username +
+            uuidv4().split("-")[0] +
+            "-" +
+            linkTitle;
+          const docRef = doc(db, "articles", docID);
+          setDoc(docRef, {
+            content: html,
+            title: title,
+            author: userId,
+            date: new Date(),
+            draft: false,
+            description: description,
+            cover: cover,
+            tags: tags,
+            likes: [],
+            likeCount: 0,
+          })
+            .then(() => {
+              if (docID !== editingDraft) {
+                deleteDoc(doc(db, "articles", editingDraft));
+                navigate("/article/" + docID);
+              } else navigate("/article/" + docID);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      })
+      .catch((error) => {
+        alert(error);
         return;
-      }
-      localStorage.removeItem(editingDraft);
-      navigate("/article/" + editingDraft);
-    } catch {
-      alert("Couldn't confirm publication. Try again to check the result.");
-    } finally {
-      setLoading(false);
-    }
+      });
   }
 
   function setCoverImage(e) {
